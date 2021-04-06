@@ -31,12 +31,10 @@ def scanFace(frame):
          centre[0] - halfRectWidth,
          centre[0] + halfRectWidth + gap]
 
-    mask = np.zeros(frame.shape[:2], dtype='uint8')
-
     for y in rows:
-        for x in columns:
-            
-            #region = frame[y:y+rectWidth, x:x+rectWidth]
+        for x in columns:    
+            square_colour = ''
+            mask = np.zeros(frame.shape[:2], dtype='uint8')
             
             square_mask = cv.rectangle(mask, (x+rectWidth,y+rectWidth),(x,y), 255, -1)
 
@@ -44,22 +42,25 @@ def scanFace(frame):
 
             cv.rectangle(frame,(x,y),(x+rectWidth,y+rectWidth), rectColour,1)
 
-    res = cv.bitwise_and(frame,frame, mask=square_mask)
-    cv.imshow("grid_mask", res)
+            count = 0
+            detected_value = []
+            detected_name = []
+            for colour_mask in colour_masks:
 
-    res2 = cv.bitwise_and(frame,frame,mask=blue_mask)
-    cv.imshow("blue_mask", res2)
+                res_colour = cv.bitwise_and(frame,frame,mask=colour_mask)
+                res = cv.bitwise_and(res_colour,res_colour,mask=square_mask)
+                pixel_points = np.transpose(np.nonzero(res))
+                if pixel_points.size != 0:
+                    detected_value.append(int(np.linalg.norm(pixel_points)))
+                    detected_name.append(colours[count])
+                    
+                count+=1
+            if len(detected_value) != 0:
+                square_colour = detected_name[detected_value.index(max(detected_value))]
+            if square_colour == '':
+                square_colour = '?'
 
-    res3 = cv.bitwise_and(res2,res2, mask=square_mask)
-    cv.imshow("res3", res3)
-
-    pixelpoints = np.transpose(np.nonzero(res3))
-    
-    #print("\nNEW OUTPUT")
-    #print(pixelpoints)
-
-    if pixelpoints.size != 0:
-        print("blue")
+            face += square_colour
 
     return face
 
@@ -95,9 +96,12 @@ while True:
     orange_upper = np.array([15,255,255])
     orange_mask = cv.inRange(hsv,orange_lower,orange_upper)
 
-    cv.imshow("colour_mask",green_mask)
+    colour_masks = [blue_mask, green_mask, red_mask, white_mask, yellow_mask, orange_mask]
+    colours = ["b","g","r","w","y","o"]
 
-    #face = scanFace(frame)
+    #cv.imshow("colour_mask",green_mask)
+
+    face = scanFace(frame)
     
     cv.imshow("Cube Solver", frame)
 

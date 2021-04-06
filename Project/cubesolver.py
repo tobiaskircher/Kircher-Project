@@ -1,4 +1,5 @@
 import cv2 as cv
+import numpy as np
 
 font = cv.FONT_HERSHEY_SIMPLEX
 PUREBLACK = (0,0,0)
@@ -76,10 +77,16 @@ while True:
     ret, frame = capture.read()
 
     frame = cv.flip(frame,1)
+
+    hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+
+    blue_lower = np.array([90,80,2])
+    blue_upper = np.array([120,255,255])
+    blue_mask = cv.inRange(hsv,blue_lower,blue_upper)
     
-    face = scanFace(frame)
+    #face = scanFace(frame)
     
-    cv.imshow("Cube Solver", frame)
+    cv.imshow("Cube Solver", blue_mask)
 
     key = cv.waitKey(1)
 

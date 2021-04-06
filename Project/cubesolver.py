@@ -52,24 +52,21 @@ def scanFace(frame):
          centre[0] - halfRectWidth,
          centre[0] + halfRectWidth + gap]
 
+    mask = np.zeros(frame.shape[:2], dtype='uint8')
+
     for y in rows:
         for x in columns:
             
-            region = frame[y:y+rectWidth, x:x+rectWidth] 
-            mean = cv.mean(region)
-            rgb = [int(mean[0]),int(mean[1]),int(mean[2])]
+            region = frame[y:y+rectWidth, x:x+rectWidth]
+            
+            square_mask = cv.rectangle(mask, (x+rectWidth,y+rectWidth),(x,y), 255, -1)
 
             rectColour = PUREBLACK
-            get_colour = getColour(rgb)
-            face += get_colour
-            
-            if get_colour != "?":
-                rectColour = rgb
 
             cv.rectangle(frame,(x,y),(x+rectWidth,y+rectWidth), rectColour,1)
-            
-            cv.putText(frame,get_colour,(x,y), font, 1,PUREWHITE,cv.LINE_4)
 
+    cv.imshow("square_mask", square_mask)
+    
     return face
 
     
@@ -84,9 +81,13 @@ while True:
     blue_upper = np.array([120,255,255])
     blue_mask = cv.inRange(hsv,blue_lower,blue_upper)
     
-    #face = scanFace(frame)
+    mask = np.zeros(frame.shape[:2], dtype='uint8')
+    square_mask = cv.rectangle(mask, (0,90), (290,450), 255, -1)
+
+    face = scanFace(frame)
     
-    cv.imshow("Cube Solver", blue_mask)
+    cv.imshow("Cube Solver", frame)
+    #cv.imshow("blue_mask", blue_mask)
 
     key = cv.waitKey(1)
 

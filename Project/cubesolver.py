@@ -19,28 +19,12 @@ else:
 
 def scanFace(frame):
     face = ''
-    rectWidth = 50
-    halfRectWidth = rectWidth // 2
-    gap = 30
-    
-    rows = [centre[1] - halfRectWidth - gap - rectWidth,
-         centre[1] - halfRectWidth,
-         centre[1] + halfRectWidth + gap]
-
-    columns = [centre[0] - halfRectWidth - gap - rectWidth,
-         centre[0] - halfRectWidth,
-         centre[0] + halfRectWidth + gap]
 
     for y in rows:
         for x in columns:    
             square_colour = ''
             mask = np.zeros(frame.shape[:2], dtype='uint8')
-            
             square_mask = cv.rectangle(mask, (x+rectWidth,y+rectWidth),(x,y), 255, -1)
-
-            rectColour = PUREBLACK
-
-            cv.rectangle(frame,(x,y),(x+rectWidth,y+rectWidth), rectColour,1)
 
             count = 0
             detected_value = []
@@ -63,12 +47,28 @@ def scanFace(frame):
             face += square_colour
 
     return face
-
-    
+   
 while True:
     ret, frame = capture.read()
 
     frame = cv.flip(frame,1)
+
+    rectWidth = 50
+    halfRectWidth = rectWidth // 2
+    gap = 30
+    
+    rows = [centre[1] - halfRectWidth - gap - rectWidth,
+         centre[1] - halfRectWidth,
+         centre[1] + halfRectWidth + gap]
+
+    columns = [centre[0] - halfRectWidth - gap - rectWidth,
+         centre[0] - halfRectWidth,
+         centre[0] + halfRectWidth + gap]
+    
+    for y in rows:
+        for x in columns:    
+            rectColour = PUREBLACK
+            cv.rectangle(frame,(x,y),(x+rectWidth,y+rectWidth), rectColour,1)
 
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
@@ -99,10 +99,6 @@ while True:
     colour_masks = [blue_mask, green_mask, red_mask, white_mask, yellow_mask, orange_mask]
     colours = ["b","g","r","w","y","o"]
 
-    #cv.imshow("colour_mask",green_mask)
-
-    face = scanFace(frame)
-    
     cv.imshow("Cube Solver", frame)
 
     key = cv.waitKey(1)
@@ -110,6 +106,7 @@ while True:
     if key == 27:
         break
     if key == 32:
+        face = scanFace(frame)
         print(face[0:3])
         print(face[3:6])
         print(face[6:9])

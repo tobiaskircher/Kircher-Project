@@ -75,8 +75,8 @@ while True:
     blue_upper = np.array([120,255,255])
     blue_mask = cv.inRange(hsv,blue_lower,blue_upper)
 
-    green_lower = np.array([25,52,72])
-    green_upper = np.array([102,255,255])
+    green_lower = np.array([36,25,25])
+    green_upper = np.array([86,255,255])
     green_mask = cv.inRange(hsv,green_lower,green_upper)
 
     red_lower = np.array([0,50,50])
@@ -95,8 +95,7 @@ while True:
     orange_upper = np.array([15,255,255])
     orange_mask = cv.inRange(hsv,orange_lower,orange_upper)
 
-    cv.imshow("colour_mask",red_mask)
-    #problems with: green
+    cv.imshow("colour_mask",green_mask)
 
     #face = scanFace(frame)
     

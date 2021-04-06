@@ -46,7 +46,21 @@ def scanFace(frame):
 
     res = cv.bitwise_and(frame,frame, mask=square_mask)
     cv.imshow("grid_mask", res)
+
+    res2 = cv.bitwise_and(frame,frame,mask=blue_mask)
+    cv.imshow("blue_mask", res2)
+
+    res3 = cv.bitwise_and(res2,res2, mask=square_mask)
+    cv.imshow("res3", res3)
+
+    pixelpoints = np.transpose(np.nonzero(res3))
     
+    #print("\nNEW OUTPUT")
+    #print(pixelpoints)
+
+    if pixelpoints.size != 0:
+        print("blue")
+
     return face
 
     

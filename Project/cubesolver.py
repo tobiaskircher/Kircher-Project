@@ -36,7 +36,7 @@ def scanFace(frame):
     for y in rows:
         for x in columns:
             
-            region = frame[y:y+rectWidth, x:x+rectWidth]
+            #region = frame[y:y+rectWidth, x:x+rectWidth]
             
             square_mask = cv.rectangle(mask, (x+rectWidth,y+rectWidth),(x,y), 255, -1)
 
@@ -71,11 +71,34 @@ while True:
 
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
-    blue_lower = np.array([90,80,2])
+    blue_lower = np.array([94,80,2])
     blue_upper = np.array([120,255,255])
     blue_mask = cv.inRange(hsv,blue_lower,blue_upper)
 
-    face = scanFace(frame)
+    green_lower = np.array([25,52,72])
+    green_upper = np.array([102,255,255])
+    green_mask = cv.inRange(hsv,green_lower,green_upper)
+
+    red_lower = np.array([136,87,111])
+    red_upper = np.array([180,255,255])
+    red_mask = cv.inRange(hsv,red_lower,red_upper)
+
+    white_lower = np.array([0,0,168])
+    white_upper = np.array([172,111,255])
+    white_mask = cv.inRange(hsv,white_lower,white_upper)
+
+    yellow_lower = np.array([20,100,100])
+    yellow_upper = np.array([30,255,255])
+    yellow_mask = cv.inRange(hsv,yellow_lower,yellow_upper)
+
+    orange_lower = np.array([5,50,50])
+    orange_upper = np.array([15,255,255])
+    orange_mask = cv.inRange(hsv,orange_lower,orange_upper)
+
+    cv.imshow("colour_mask",orange_mask)
+    #problems with: green, red
+
+    #face = scanFace(frame)
     
     cv.imshow("Cube Solver", frame)
 

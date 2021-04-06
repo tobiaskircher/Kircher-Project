@@ -17,27 +17,6 @@ else:
     width = dimensions[1]
     centre = [width//2, height//2]
 
-#Colour Ranges
-#colour = [[r_min,r_max],[g_min,g_max],[b_min,b_max], "colour_name"]
-blue = [[150,220],[145,185],[65,110],"b"]
-orange = [[0,115],[110,165],[205,255],"o"]
-green = [[75,149],[170,200],[85,135],"g"]
-red = [[30,155],[45,109],[195,255],"r"]
-white = [[125,220],[145,220],[145,220],"w"]
-yellow = [[30,130],[170,215],[160,200],"y"]
-colours = [blue, orange, green, red, white, yellow]
-    
-def getColour(rgb_value):
-    return_value = "?"
-    for colour in colours:
-        if colour[0][0] <= rgb_value[0] <= colour[0][1]:
-            if colour[1][0] <= rgb_value[1] <= colour[1][1]:
-                if colour[2][0] <= rgb_value[2] <= colour[2][1]:
-                    return_value = colour[3]
-                    break
-    return return_value
-
-
 def scanFace(frame):
     face = ''
     rectWidth = 50
@@ -65,7 +44,8 @@ def scanFace(frame):
 
             cv.rectangle(frame,(x,y),(x+rectWidth,y+rectWidth), rectColour,1)
 
-    cv.imshow("square_mask", square_mask)
+    res = cv.bitwise_and(frame,frame, mask=square_mask)
+    cv.imshow("grid_mask", res)
     
     return face
 
@@ -80,14 +60,10 @@ while True:
     blue_lower = np.array([90,80,2])
     blue_upper = np.array([120,255,255])
     blue_mask = cv.inRange(hsv,blue_lower,blue_upper)
-    
-    mask = np.zeros(frame.shape[:2], dtype='uint8')
-    square_mask = cv.rectangle(mask, (0,90), (290,450), 255, -1)
 
     face = scanFace(frame)
     
     cv.imshow("Cube Solver", frame)
-    #cv.imshow("blue_mask", blue_mask)
 
     key = cv.waitKey(1)
 

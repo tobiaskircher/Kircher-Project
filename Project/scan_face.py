@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-
+    
 font = cv.FONT_HERSHEY_SIMPLEX
 PUREBLACK = (0,0,0)
 PUREWHITE = (255,255,255)

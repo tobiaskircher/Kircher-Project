@@ -1,4 +1,5 @@
 import pygame
+import scan_face
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -21,6 +22,21 @@ done = False
 #Manages how quick screen refreshes
 clock = pygame.time.Clock()
 
+def get_face():
+    face = scan_face.run()
+    print(face[0:3])
+    print(face[3:6])
+    print(face[6:9])
+
+def timer():
+    print("Timer.")
+
+def learn():
+    print("Learn.")
+
+def help():
+    print("Help.")
+    
 def test_function():
     print("Test Function Called.")
 
@@ -56,10 +72,10 @@ while not done:
     screen.fill(BLACK)
 
     #Logic
-    button("Solve",220,150,200,50,GREY,LIGHT_GREY, test_function)
-    button("Time",220,210,200,50,GREY,LIGHT_GREY, test_function)
-    button("Learn",220,270,200,50,GREY,LIGHT_GREY, test_function)
-    button("Help",220,330,200,50,GREY,LIGHT_GREY, test_function)
+    button("Solve",220,150,200,50,GREY,LIGHT_GREY, get_face)
+    button("Timer",220,210,200,50,GREY,LIGHT_GREY, timer)
+    button("Learn",220,270,200,50,GREY,LIGHT_GREY, learn)
+    button("Help",220,330,200,50,GREY,LIGHT_GREY, help)
     text("CUBE SOLVER", 50, 320, 80,WHITE)
 
     #Flip display

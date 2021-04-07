@@ -1,5 +1,10 @@
 import cv2 as cv
 import numpy as np
+import pygame
+
+pygame.init()
+pygame.display.set_caption("Cube Solver")
+screen = pygame.display.set_mode([640,480])
 
 font = cv.FONT_HERSHEY_SIMPLEX
 PUREBLACK = (0,0,0)
@@ -47,8 +52,10 @@ def scanFace(frame):
             face += square_colour
 
     return face
-   
-while True:
+
+done = False
+while not done:
+    #OpenCV
     ret, frame = capture.read()
 
     frame = cv.flip(frame,1)
@@ -99,11 +106,11 @@ while True:
     colour_masks = [blue_mask, green_mask, red_mask, white_mask, yellow_mask, orange_mask]
     colours = ["b","g","r","w","y","o"]
 
-    cv.imshow("Cube Solver", frame)
+    #cv.imshow("Cube Solver", frame)
 
     key = cv.waitKey(1)
 
-    if key == 27 or cv.getWindowProperty("Cube Solver", 0) < 0:
+    if key == 27:
         break
     if key == 32:
         face = scanFace(frame)
@@ -111,7 +118,25 @@ while True:
         print(face[3:6])
         print(face[6:9])
 
-        
+    #Pygame
+    screen.fill([0,0,0])
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+    frame = frame.swapaxes(0,1)
+    pygame.surfarray.blit_array(screen, frame)
+    pygame.display.update()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+        face = scanFace(frame)
+        print(face[0:3])
+        print(face[3:6])
+        print(face[6:9])
+
+pygame.quit()      
 capture.release()
 cv.destroyAllWindows()
 

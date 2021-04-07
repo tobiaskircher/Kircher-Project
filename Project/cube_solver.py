@@ -23,8 +23,15 @@ clock = pygame.time.Clock()
 
 def test_function():
     print("Test Function Called.")
+
+def text(content, size, x, y, colour=BLACK):
+    font = pygame.font.Font("freesansbold.ttf", size)
+    text_surface = font.render(content,True,colour)
+    text_rect = font.render(content,True,colour).get_rect()
+    text_rect.center = (x,y)
+    screen.blit(text_surface, text_rect)
     
-def button(text, x, y, width, height, inactive, active, func=None):
+def button(msg, x, y, width, height, inactive, active, func=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x+width > mouse[0] > x and  y+height > mouse[1] > y:
@@ -34,10 +41,8 @@ def button(text, x, y, width, height, inactive, active, func=None):
     else:
         pygame.draw.rect(screen, inactive, (x,y,width,height))
 
-    font = pygame.font.Font("freesansbold.ttf",20)
-    text_surface, text_rect = font.render(text,True,BLACK), font.render(text,True,BLACK).get_rect()
-    text_rect.center = (x+(width//2),y+(height//2))
-    screen.blit(text_surface, text_rect)
+    text(msg, 20, x+(width//2), y+(height//2))
+
 
 #Game Loop
 while not done:
@@ -52,6 +57,10 @@ while not done:
 
     #Logic
     button("Solve",220,150,200,50,GREY,LIGHT_GREY, test_function)
+    button("Time",220,210,200,50,GREY,LIGHT_GREY, test_function)
+    button("Learn",220,270,200,50,GREY,LIGHT_GREY, test_function)
+    button("Help",220,330,200,50,GREY,LIGHT_GREY, test_function)
+    text("CUBE SOLVER", 50, 320, 80,WHITE)
 
     #Flip display
     pygame.display.flip()

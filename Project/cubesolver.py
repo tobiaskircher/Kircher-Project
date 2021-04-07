@@ -100,12 +100,10 @@ while True:
     colours = ["b","g","r","w","y","o"]
 
     cv.imshow("Cube Solver", frame)
-    cv.imshow("blue_mask", blue_mask)
-    cv.imshow("white_mask", white_mask)
 
     key = cv.waitKey(1)
 
-    if key == 27:
+    if key == 27 or cv.getWindowProperty("Cube Solver", 0) < 0:
         break
     if key == 32:
         face = scanFace(frame)

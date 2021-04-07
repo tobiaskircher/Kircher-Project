@@ -72,8 +72,8 @@ while True:
 
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
-    blue_lower = np.array([94,80,2])
-    blue_upper = np.array([120,255,255])
+    blue_lower = np.array([90,80,0])
+    blue_upper = np.array([140,255,255])
     blue_mask = cv.inRange(hsv,blue_lower,blue_upper)
 
     green_lower = np.array([36,25,25])
@@ -100,6 +100,8 @@ while True:
     colours = ["b","g","r","w","y","o"]
 
     cv.imshow("Cube Solver", frame)
+    cv.imshow("blue_mask", blue_mask)
+    cv.imshow("white_mask", white_mask)
 
     key = cv.waitKey(1)
 

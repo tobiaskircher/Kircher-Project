@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
     
-def run():
+def run(facing_screen, facing_up):
     font = cv.FONT_HERSHEY_SIMPLEX
     PUREBLACK = (0,0,0)
     PUREWHITE = (255,255,255)
@@ -72,6 +72,13 @@ def run():
             for x in columns:    
                 rectColour = PUREBLACK
                 cv.rectangle(frame,(x,y),(x+rectWidth,y+rectWidth), rectColour,1)
+                
+        text_to_display = "Please scan the " +facing_screen+ " face with the " +facing_up+ " face facing up."
+        font = cv.FONT_HERSHEY_SIMPLEX
+        cv.putText(frame, text_to_display,(10,50),font,0.65,PUREWHITE,2,cv.LINE_4)
+        
+        cv.putText(frame,"Align the cube with the grid shown on the screen.",(10,400),font,0.65,PUREWHITE,2,cv.LINE_4)
+        cv.putText(frame, "Press SPACE once aligned, to scan the colours.",(10,450),font,0.65,PUREWHITE,2,cv.LINE_4)
 
         hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
@@ -117,5 +124,5 @@ def run():
 
     return face
 
-#run()
+#run("green","white")
 

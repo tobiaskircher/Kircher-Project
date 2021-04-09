@@ -43,11 +43,12 @@ class UI():
         UI.text(msg, 20, x+(width//2), y+(height//2))
 
 class ButtonFunctions():
-    def get_face():
-        face = scan_face.run()
+    def solve():
+        game_state.state = "solve"
+        '''face = scan_face.run()
         print(face[0:3])
         print(face[3:6])
-        print(face[6:9])
+        print(face[6:9])'''
 
     def timer():
         game_state.state = "timer"
@@ -58,13 +59,24 @@ class ButtonFunctions():
     def help():
         game_state.state = "help"
 
+def get_face():
+    face = scan_face.run()
+    return face
+
 class GameState():
     def __init__(self):
         self.state = "menu"
 
+        self.faces_to_scan = {
+            "facing_camera": ["Green","Red","Blue","Orange","White","Yellow"],
+            "facing_up": ["White","White","White","White","Green","Blue"]
+            }
+
     def state_manager(self):
         if self.state == "menu":
             self.menu_screen()
+        elif self.state == "solve":
+            self.solve_screen()
         elif self.state == "timer":
             self.timer_screen()
         elif self.state == "learn":
@@ -73,7 +85,7 @@ class GameState():
             self.help_screen()
 
     def menu_screen(self):
-        UI.button("Solve",220,150,200,50,GREY,LIGHT_GREY, ButtonFunctions.get_face)
+        UI.button("Solve",220,150,200,50,GREY,LIGHT_GREY, ButtonFunctions.solve)
         UI.button("Timer",220,210,200,50,GREY,LIGHT_GREY, ButtonFunctions.timer)
         UI.button("Learn",220,270,200,50,GREY,LIGHT_GREY, ButtonFunctions.learn)
         UI.button("Help",220,330,200,50,GREY,LIGHT_GREY, ButtonFunctions.help)
@@ -81,6 +93,12 @@ class GameState():
 
     def return_to_menu(self):
         self.state = "menu"
+
+    def solve_screen(self):
+        UI.text("SOLVE", 50, 320, 30,WHITE)
+        UI.text("Please Follow The Instructions On The Other Window.", 23, 320, 240,WHITE)
+        pygame.display.flip()
+        get_face()
         
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

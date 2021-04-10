@@ -51,7 +51,9 @@ class ButtonFunctions():
         game_state.state = "timer"
         game_state.timer_started = False
         game_state.time_total = 0.0
+        game_state.time_total_rounded = 0.0
         game_state.space_being_pressed = False
+        game_state.just_stopped = False
 
     def learn():
         game_state.state = "learn"
@@ -115,7 +117,7 @@ class GameState():
         if self.timer_started:
             self.time2 = time.time()
             self.time_total = self.time2 - self.time1
-            self.time_total = round(self.time_total, 1)
+            self.time_total_rounded = round(self.time_total, 1)
 
         keys = pygame.key.get_pressed()
             
@@ -125,15 +127,20 @@ class GameState():
 
             if self.timer_started == True:
                 self.timer_started = False
+                self.just_stopped = True
+                self.time_total_rounded = round(self.time_total, 2)
 
         else:
             if self.space_being_pressed == True:
                 self.space_being_pressed = False
                 if self.timer_started == False:
-                    self.timer_started = True
-                    self.time1 = time.time()
+                    if self.just_stopped == False:
+                        self.timer_started = True
+                        self.time1 = time.time()
+                    else:
+                        self.just_stopped = False
 
-        UI.text(str(self.time_total), 80, 320, 240,WHITE)
+        UI.text(str(self.time_total_rounded), 80, 320, 240,WHITE)
             
 
     def learn_screen(self):

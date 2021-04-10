@@ -1,5 +1,6 @@
 import pygame
 import scan_face
+import time
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -45,13 +46,12 @@ class UI():
 class ButtonFunctions():
     def solve():
         game_state.state = "solve"
-        '''face = scan_face.run()
-        print(face[0:3])
-        print(face[3:6])
-        print(face[6:9])'''
 
     def timer():
         game_state.state = "timer"
+        game_state.timer_started = False
+        game_state.time_total = 0.0
+        game_state.space_being_pressed = False
 
     def learn():
         game_state.state = "learn"
@@ -59,17 +59,13 @@ class ButtonFunctions():
     def help():
         game_state.state = "help"
 
-def get_face():
-    face = scan_face.run()
-    return face
-
 class GameState():
     def __init__(self):
         self.state = "menu"
 
         self.faces_to_scan = {
-            "facing_camera": ["Green","Red","Blue","Orange","White","Yellow"],
-            "facing_up": ["White","White","White","White","Green","Blue"]
+            "facing_camera": ["green","red","blue","orange","white","yellow"],
+            "facing_up": ["white","white","white","white","green","blue"]
             }
 
     def state_manager(self):
@@ -98,11 +94,47 @@ class GameState():
         UI.text("SOLVE", 50, 320, 30,WHITE)
         UI.text("Please Follow The Instructions On The Other Window.", 23, 320, 240,WHITE)
         pygame.display.flip()
-        get_face()
+        
+        count = 0
+        for i in range(6): #6 faces to scan
+            face = scan_face.run(self.faces_to_scan["facing_camera"][count],self.faces_to_scan["facing_up"][count])
+            print("\n")
+            print(self.faces_to_scan["facing_camera"][count])
+            print(face[0:3])
+            print(face[3:6])
+            print(face[6:9])
+            count += 1
         
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("TIMER", 50, 320, 30,WHITE)
+        
+        
+        keys = pygame.key.get_pressed()
+
+        if self.timer_started:
+            self.time2 = time.time()
+            self.time_total = self.time2 - self.time1
+            self.time_total = round(self.time_total, 1)
+
+        keys = pygame.key.get_pressed()
+            
+        if keys[pygame.K_SPACE]:
+            if self.space_being_pressed == False:
+                self.space_being_pressed = True
+
+            if self.timer_started == True:
+                self.timer_started = False
+
+        else:
+            if self.space_being_pressed == True:
+                self.space_being_pressed = False
+                if self.timer_started == False:
+                    self.timer_started = True
+                    self.time1 = time.time()
+
+        UI.text(str(self.time_total), 80, 320, 240,WHITE)
+            
 
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

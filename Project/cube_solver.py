@@ -2,6 +2,7 @@ import pygame
 import scan_face
 import time
 import random
+import solution_generator
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -47,6 +48,7 @@ class UI():
 class ButtonFunctions():
     def solve():
         game_state.state = "solve"
+        game_state.faces_scanned = 0
 
     def timer():
         game_state.state = "timer"
@@ -87,9 +89,11 @@ class GameState():
         self.state = "menu"
 
         self.faces_to_scan = {
-            "facing_camera": ["green","red","blue","orange","white","yellow"],
-            "facing_up": ["white","white","white","white","green","blue"]
+            "facing_camera": ["yellow","blue","red","green","orange","white"],
+            "facing_up": ["orange","yellow","yellow","yellow","yellow","red"]
             }
+
+        self.cube = ""
 
     def state_manager(self):
         if self.state == "menu":
@@ -118,15 +122,18 @@ class GameState():
         UI.text("Please Follow The Instructions On The Other Window.", 23, 320, 240,WHITE)
         pygame.display.flip()
         
-        count = 0
-        for i in range(6): #6 faces to scan
-            face = scan_face.run(self.faces_to_scan["facing_camera"][count],self.faces_to_scan["facing_up"][count])
-            print("\n")
-            print(self.faces_to_scan["facing_camera"][count])
-            print(face[0:3])
-            print(face[3:6])
-            print(face[6:9])
-            count += 1
+
+        face = scan_face.run(self.faces_to_scan["facing_camera"][self.faces_scanned],self.faces_to_scan["facing_up"][self.faces_scanned])
+        self.faces_scanned += 1
+        '''print("\n")
+        print(self.faces_to_scan["facing_camera"][count])
+        print(face[0:3])
+        print(face[3:6])
+        print(face[6:9])
+        count += 1'''
+
+    def correction_screen(self):
+        pass
         
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

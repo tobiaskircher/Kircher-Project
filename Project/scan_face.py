@@ -113,8 +113,6 @@ def run(facing_screen, facing_up):
 
         key = cv.waitKey(1)
 
-        if key == 27 or cv.getWindowProperty("Cube Solver", 0) < 0:
-            done = True
         if key == 32:
             face = scanFace(frame)
             done = True

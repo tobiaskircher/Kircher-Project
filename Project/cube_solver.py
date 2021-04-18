@@ -1,6 +1,7 @@
 import pygame
 import scan_face
 import time
+import random
 
 BLACK = (0,0,0)
 WHITE = (255,255,255)
@@ -54,12 +55,32 @@ class ButtonFunctions():
         game_state.time_total_rounded = 0.0
         game_state.space_being_pressed = False
         game_state.just_stopped = False
+        ButtonFunctions.generate_scramble()
 
     def learn():
         game_state.state = "learn"
 
     def help():
         game_state.state = "help"
+
+    def generate_scramble():
+        scramble = ""
+        moves = ["L","M","R","U","D","F","B"]
+        direction = ["","'","2"]
+        previous_dir = ""
+        second_previous_dir = ""
+        scramble_length = 0
+
+        while scramble_length < 16:
+            next_move = random.choice(moves)
+            if next_move != previous_dir and next_move != second_previous_dir:
+                second_previous_dir = previous_dir
+                previous_dir = next_move
+                next_move = next_move + random.choice(direction)
+                scramble = scramble + next_move + " "
+                scramble_length += 1
+
+        game_state.scramble = scramble
 
 class GameState():
     def __init__(self):
@@ -110,6 +131,10 @@ class GameState():
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("TIMER", 50, 320, 30,WHITE)
+
+        
+        UI.text(self.scramble, 25, 320, 400,WHITE)
+        UI.button("Generate New Scramble",195,430,250,40,GREY,LIGHT_GREY, ButtonFunctions.generate_scramble)
         
         
         keys = pygame.key.get_pressed()

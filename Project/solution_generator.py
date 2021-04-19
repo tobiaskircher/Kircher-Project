@@ -6,7 +6,7 @@ from rubik_solver import utils
 def run(cube):
     
     solution = utils.solve(cube, "Kociemba")
-    print(solution)
+    #print(solution)
 
     return solution
 

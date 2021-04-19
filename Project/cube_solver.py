@@ -77,15 +77,32 @@ class ButtonFunctions():
     def solve():
         game_state.state = "solve"
         game_state.faces_scanned = 0
+        game_state.cube = ""
+        game_state.solution = ""
+
+        ###TESTING SKIP
+        game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        game_state.state = "solve_solution_screen"
+        game_state.solution = solution_generator.run(game_state.cube)
+        game_state.move_counter = 0
+        game_state.space_being_pressed = True
+        ###TESTING SKIP END
 
     def confirm_adjustments():
-        game_state.state = "solve"
+        game_state.cube += game_state.face
+        if game_state.faces_scanned < 6:
+            game_state.state = "solve"
+        else:
+            game_state.state ="solve_solution_screen"
+            game_state.move_counter = 0
+            game_state.solution = solution_generator.run(game_state.cube)
+            game_state.space_being_pressed = True
 
     def change_colour(params):
         position = params[0]
         game_state.face = list(game_state.face)
         game_state.face[position] = game_state.equipped_colour
-        "".join(game_state.face)
+        game_state.face = "".join(game_state.face)
 
     def equip_colour(params):
         colour = params[0]
@@ -134,7 +151,6 @@ class GameState():
             "facing_up": ["orange","yellow","yellow","yellow","yellow","red"]
             }
 
-        self.cube = ""
         self.equipped_colour = "w"
 
     def state_manager(self):
@@ -166,7 +182,7 @@ class GameState():
         self.state = "menu"
 
     def solve_screen(self):
-        UI.text("SOLVE", 50, 320, 30,WHITE)
+        UI.text("SOLVER", 50, 320, 30,WHITE)
         UI.text("Please Follow The Instructions On The Other Window.", 23, 320, 240,WHITE)
         pygame.display.flip()
         
@@ -174,15 +190,7 @@ class GameState():
         self.face = scan_face.run(self.faces_to_scan["facing_camera"][self.faces_scanned],self.faces_to_scan["facing_up"][self.faces_scanned])
         self.faces_scanned += 1
 
-        if self.faces_scanned < 7:
-            self.state = "solve_correction_screen"
-        else:
-            self.state = "solve_solution_screen"
-            
-        '''
-        print(face[0:3])
-        print(face[3:6])
-        print(face[6:9])'''
+        self.state = "solve_correction_screen" 
 
     def solve_correction_screen(self):
         UI.text("ADJUSTMENTS", 50, 320, 30,WHITE)
@@ -221,6 +229,51 @@ class GameState():
     def solve_solution_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("SOLVER", 50, 320, 30,WHITE)
+        UI.text("Hold the cube with the red face facing you and the yellow face facing up.", 15, 320, 70,WHITE)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            if self.space_being_pressed == False:
+                self.space_being_pressed = True
+                if self.move_counter + 1 < len(self.solution):
+                    self.move_counter += 1
+        else:
+            self.space_being_pressed = False
+        
+        UI.text("Previous", 15, 380, 195,WHITE)
+        UI.text("Moves:", 15, 380, 210,WHITE)
+        if self.move_counter > 1:
+            prev_move_text = str(self.solution[self.move_counter-2]) +"  "+ str(self.solution[self.move_counter-1])
+        elif self.move_counter == 1:
+            prev_move_text = str(self.solution[self.move_counter-1])
+        else:
+            prev_move_text = ""
+        UI.text(prev_move_text, 25, 380, 250,WHITE)
+        
+        UI.text("Next", 25, 480, 190,WHITE)
+        UI.text("Move:", 25, 480, 215,WHITE)
+        UI.text(str(self.solution[self.move_counter]), 40, 480, 250,WHITE)
+        
+        UI.text("Upcoming", 15, 580, 195,WHITE)
+        UI.text("Moves:", 15, 580, 210,WHITE)
+        difference = (len(self.solution) - 1) - (self.move_counter + 2)
+        if difference > 0:
+            upcoming_move_text = str(self.solution[self.move_counter+1]) +"  "+ str(self.solution[self.move_counter+2])
+        elif difference == -1:
+            upcoming_move_text = str(self.solution[self.move_counter+1])
+        else:
+            upcoming_move_text = ""
+
+        UI.text(upcoming_move_text, 25, 580, 250,WHITE)
+
+        moves_remaining_text = "Moves Remaining: " + str(len(self.solution) - 1 - self.move_counter)
+        UI.text(moves_remaining_text, 15, 480, 290,WHITE)
+
+        UI.text("Press SPACE for next move", 15, 480, 310,WHITE)
+            
+        #print(self.cube)
+        #print(self.solution)
+        
         
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

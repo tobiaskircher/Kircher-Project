@@ -81,11 +81,11 @@ class ButtonFunctions():
         game_state.solution = ""
 
         ###TESTING SKIP
-        game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
-        game_state.state = "solve_solution_screen"
-        game_state.solution = solution_generator.run(game_state.cube)
-        game_state.move_counter = 0
-        game_state.space_being_pressed = True
+        #game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        #game_state.state = "solve_solution_screen"
+        #game_state.solution = solution_generator.run(game_state.cube)
+        #game_state.move_counter = 0
+        #game_state.space_being_pressed = True
         ###TESTING SKIP END
 
     def confirm_adjustments():

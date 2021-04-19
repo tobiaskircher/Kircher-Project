@@ -219,7 +219,8 @@ class GameState():
         
 
     def solve_solution_screen(self):
-        pass
+        UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
+        UI.text("SOLVER", 50, 320, 30,WHITE)
         
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

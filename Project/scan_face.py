@@ -115,6 +115,7 @@ def run(facing_screen, facing_up):
 
         if key == 32:
             face = scanFace(frame)
+            face = (''.join(reversed(face[0:3])))+(''.join(reversed(face[3:6])))+(''.join(reversed(face[6:9])))
             done = True
    
     capture.release()

@@ -257,7 +257,7 @@ class GameState():
         UI.text("Upcoming", 15, 580, 195,WHITE)
         UI.text("Moves:", 15, 580, 210,WHITE)
         difference = (len(self.solution) - 1) - (self.move_counter + 2)
-        if difference > 0:
+        if difference >= 0:
             upcoming_move_text = str(self.solution[self.move_counter+1]) +"  "+ str(self.solution[self.move_counter+2])
         elif difference == -1:
             upcoming_move_text = str(self.solution[self.move_counter+1])

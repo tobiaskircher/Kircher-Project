@@ -1,8 +1,5 @@
-import pygame
-import scan_face
-import time
-import random
-import solution_generator
+import pygame, time, random
+import scan_face, solution_generator
 
 #COLOURS
 BLACK = (0,0,0)
@@ -125,7 +122,7 @@ class ButtonFunctions():
 
     def generate_scramble():
         scramble = ""
-        moves = ["L","M","R","U","D","F","B"]
+        moves = ["L","M","R","U","F","D"]
         direction = ["","'","2"]
         previous_dir = ""
         second_previous_dir = ""
@@ -136,7 +133,10 @@ class ButtonFunctions():
             if next_move != previous_dir and next_move != second_previous_dir:
                 second_previous_dir = previous_dir
                 previous_dir = next_move
-                next_move = next_move + random.choice(direction)
+                next_move = next_move + random.choices(
+                    direction,
+                    weights=[0.5,0.25,0.25],
+                    k=1)[0]
                 scramble = scramble + next_move + " "
                 scramble_length += 1
 

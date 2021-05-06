@@ -35,7 +35,6 @@ class Cube():
         self.wr = Piece([0,-1,-1],[None,"W","R"])
         self.wg = Piece([1,-1,0],["G","W",None])
         self.wo = Piece([0,-1,-1],[None,"W","O"])
-        
         self.br = Piece([-1,0,-1],["B",None,"R"])
         self.bo = Piece([-1,0,1],["B",None,"O"])
         self.gr = Piece([1,0,-1],["G",None,"R"])
@@ -47,11 +46,28 @@ class Cube():
         self.ybo = Piece([-1,1,1],["B","Y","O"])
         self.ygr = Piece([1,1,-1],["G","Y","O"])
         self.ygo = Piece([1,1,1],["G","Y","R"])
-
         self.wbr = Piece([-1,-1,-1],["B","W","R"])
         self.wbo = Piece([-1,-1,1],["B","W","O"])
         self.wgr = Piece([1,-1,-1],["G","W","R"])
         self.wgo = Piece([1,-1,1],["G","W","O"])
+
+        self.pieces = [
+            self.y, self.b, self.r, self.g, self.o, self.w,
+            self.yb, self.yr, self.yg, self.yo,
+            self.wb, self.wr, self.wg, self.wo,
+            self.br, self.bo, self.gr, self.go,
+            self.ybr, self.ybo, self.ygr, self.ygo,
+            self.wbr, self.wbo, self.wgr, self.wgo
+        ]
+
+    def get_piece(self,coordinates):
+        for piece in self.pieces:
+            if piece.position == coordinates:
+                return piece
+        return None
+
+    def __str__(self):
+        return "Print cube."
                 
 
 
@@ -59,3 +75,5 @@ class Cube():
 
 test_piece = Piece([1,0,-1],["B","W",None])
 test_cube = Cube()
+#print(test_cube)
+print(test_cube.get_piece([1,1,1]))

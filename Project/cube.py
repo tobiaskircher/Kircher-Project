@@ -90,17 +90,44 @@ class Cube():
             
         if move == "R":
             pieces_to_move = self.get_pieces("x",1)
-            for piece in pieces_to_move:
-                self.rotate_piece(piece,"x",1)
+            #for piece in pieces_to_move:
+                #self.rotate_piece(piece,"x",1)
+            
+            test_piece =Piece([0,-1,0],[None,"W",None])
+            print(test_piece)
+            self.rotate_piece(test_piece,"x")
+            print(test_piece)
                 
 
-    def rotate_piece(self, piece, axis, direction):
+    def rotate_piece(self, piece, axis, direction=1):
         position = piece.position
-        constant_axis = position[self.axes[axis]]
-        changing_axis1 = position[self.axes[self.axis_affects[axis][0]]]
-        changing_axis2 = position[self.axes[self.axis_affects[axis][1]]]
+        constant_axis = self.axes[axis]
+        changing1 = self.axes[self.axis_affects[axis][0]]
+        changing2 = self.axes[self.axis_affects[axis][1]]
+        colours = piece.colours
+    
+        if piece.type == "center":
+            if position[constant_axis] == 0:
+                #find index of colour in list of colours
+                index = 0
+                found = False
+                while not found:
+                    if colours[index] != None:
+                        found = True
+                    else:
+                        index += 1
+                        
+                if position[changing1] <= 0 and position[changing2] <= 0:
+                    piece.position[changing2] += 1
+                    piece.position[changing1] += 1
+                    new_index = (index + 1) % 3                                        
+                else:
+                    piece.position[changing2] -= 1
+                    piece.position[changing1] -= 1
+                    new_index = (index - 1) % 3
 
-
+                piece.colours[new_index] = colours[index]
+                piece.colours[index] = None
         
     def get_piece(self,coordinates):
         for piece in self.pieces:
@@ -191,9 +218,12 @@ class Cube():
 
 
 
-test_piece = Piece([1,0,-1],["B","W",None])
-print(test_piece.type)
+#test_piece = Piece([-1,0,0],["B",None,None])
+
+
+
+
 test_cube = Cube()
 print(test_cube)
-#test_cube.move("R")
+test_cube.move("R")
 

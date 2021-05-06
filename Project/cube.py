@@ -93,7 +93,7 @@ class Cube():
             #for piece in pieces_to_move:
                 #self.rotate_piece(piece,"x",1)
             
-            test_piece =Piece([0,-1,0],[None,"W",None])
+            test_piece = Piece([1,1,0],["G","Y",None])
             print(test_piece)
             self.rotate_piece(test_piece,"x")
             print(test_piece)
@@ -128,6 +128,54 @@ class Cube():
 
                 piece.colours[new_index] = colours[index]
                 piece.colours[index] = None
+
+        elif piece.type == "edge":
+                indices = []
+                for index in range(len(colours)):
+                    if colours[index] != None:
+                        indices.append(index)
+
+                if position[constant_axis] == 0:
+
+                    if position[changing1] > 0:
+                        if position[changing2] < 0:
+                            position[changing2] += 2
+                        else:
+                            position[changing1] -= 2
+                    else:
+                        if position[changing2] < 0:
+                            position[changing1] += 2
+                        else:
+                            position[changing2] -= 2
+                            
+                    temp = piece.colours[indices[0]]
+                    piece.colours[indices[0]] = colours[indices[1]]
+                    piece.colours[indices[1]] = temp
+                    
+                else:
+                    if position[changing1] <= 0 and position[changing2] <= 0:
+                        piece.position[changing2] += 1
+                        piece.position[changing1] += 1                                        
+                    else:
+                        piece.position[changing2] -= 1
+                        piece.position[changing1] -= 1
+                    
+                    #find index of none
+                    index = 0
+                    found = False
+                    while not found:
+                        if colours[index] == None:
+                            found = True
+                        else:
+                            index += 1
+
+                    #remove index of colour facing in same direction
+                    indices.remove(constant_axis)
+                        
+                    piece.colours[index] = piece.colours[indices[0]]
+                    piece.colours[indices[0]] = None
+
+                
         
     def get_piece(self,coordinates):
         for piece in self.pieces:

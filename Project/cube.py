@@ -6,6 +6,18 @@ class Piece():
         #[clr facing x dir, clr facing y dir, clr facing z dir]
         self.colours = colours
 
+        colour_count = 0
+        for colour in colours:
+            if colour != None:
+                colour_count+=1
+                
+        if colour_count == 1:
+            self.type = "center"
+        elif colour_count == 2:
+            self.type = "edge"
+        elif colour_count == 3:
+            self.type = "corner"
+
     def __str__(self):
         line1 = "Position: " + str(self.position)
         line2 = "Colours: " + str(self.colours)
@@ -60,11 +72,51 @@ class Cube():
             self.wbr, self.wbo, self.wgr, self.wgo
         ]
 
+        #variables
+        self.axes= {"x":0,
+               "y":1,
+               "z":2
+               }
+        #each rotation on an axis affects another axis of the pieces value
+        #for example r affects all pieces with x=1, but it changes their y and z values
+        self.axis_affects = {"x":["y","z"],
+                             "y":["x","z"],
+                             "z":["x","y"]
+                             }
+
+    def move(self, move, direction=None):
+        if direction == None: direction = 1
+        else: direction = -1
+            
+        if move == "R":
+            pieces_to_move = self.get_pieces("x",1)
+            for piece in pieces_to_move:
+                self.rotate_piece(piece,"x",1)
+                
+
+    def rotate_piece(self, piece, axis, direction):
+        position = piece.position
+        constant_axis = position[self.axes[axis]]
+        changing_axis1 = position[self.axes[self.axis_affects[axis][0]]]
+        changing_axis2 = position[self.axes[self.axis_affects[axis][1]]]
+
+
+        
     def get_piece(self,coordinates):
         for piece in self.pieces:
             if piece.position == coordinates:
                 return piece
         return None
+
+    def get_pieces(self, axis, value):
+        pieces_selected = []
+        for piece in self.pieces:
+            if piece.position[self.axes[axis]] == value:
+                pieces_selected.append(piece)
+
+        return pieces_selected
+                
+        
 
     def __str__(self):
         #empty list for cube
@@ -140,6 +192,8 @@ class Cube():
 
 
 test_piece = Piece([1,0,-1],["B","W",None])
+print(test_piece.type)
 test_cube = Cube()
 print(test_cube)
+#test_cube.move("R")
 

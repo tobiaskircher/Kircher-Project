@@ -96,16 +96,16 @@ class Cube():
             #for piece in pieces_to_move:
                 #self.rotate_piece(piece,"x",1)
             
-            test_piece = Piece([1,1,0],["G","Y",None])
+            test_piece = Piece([-1,1,0],["B","Y",None])
             print(test_piece)
-            self.rotate_piece(test_piece,"x")
+            self.rotate_piece(test_piece,"z")
             print(test_piece)
                 
 
     def rotate_piece(self, piece, axis, direction=1):
         pos = piece.position
         constant_axis = self.axes[axis]
-        #axis_affects has the right axes and order for cross section
+        #axis_affects has the correct axes and order for cross section
         up_axis = self.axes[self.axis_affects[axis][0]]
         along_axis = self.axes[self.axis_affects[axis][1]]
         clrs = piece.colours

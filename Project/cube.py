@@ -1,4 +1,7 @@
-#Free Mode
+#Virtual Cube
+
+import numpy as np
+
 class Piece():
     def __init__(self, position, colours):
         #[0,0,0] being centre piece (does not exist, in middle of cube)
@@ -102,78 +105,41 @@ class Cube():
     def rotate_piece(self, piece, axis, direction=1):
         position = piece.position
         constant_axis = self.axes[axis]
-        changing1 = self.axes[self.axis_affects[axis][0]]
-        changing2 = self.axes[self.axis_affects[axis][1]]
+        #axis_affects has the right axes and order for cross section
+        up_axis = self.axes[self.axis_affects[axis][0]]
+        along_axis = self.axes[self.axis_affects[axis][1]]
         colours = piece.colours
+
+        #cross section of axis of rotation
+        matrix = np.array([[0,0,0],
+                           [0,0,0],
+                           [0,0,0]])
+
+        print(matrix)
+
+        print(position[up_axis])
+        print(position[along_axis])
+        
+        matrix_row = 1 - position[up_axis]
+        matrix_column = position[along_axis] + 1
+
+        print(matrix_row)
+        print(matrix_column)
+
+        matrix[matrix_row,matrix_column] = 1
+
+        print(matrix)
+
+        
     
         if piece.type == "center":
-            if position[constant_axis] == 0:
-                #find index of colour in list of colours
-                index = 0
-                found = False
-                while not found:
-                    if colours[index] != None:
-                        found = True
-                    else:
-                        index += 1
-                        
-                if position[changing1] <= 0 and position[changing2] <= 0:
-                    piece.position[changing2] += 1
-                    piece.position[changing1] += 1
-                    new_index = (index + 1) % 3                                        
-                else:
-                    piece.position[changing2] -= 1
-                    piece.position[changing1] -= 1
-                    new_index = (index - 1) % 3
-
-                piece.colours[new_index] = colours[index]
-                piece.colours[index] = None
+            pass
 
         elif piece.type == "edge":
-                indices = []
-                for index in range(len(colours)):
-                    if colours[index] != None:
-                        indices.append(index)
+            pass
 
-                if position[constant_axis] == 0:
-
-                    if position[changing1] > 0:
-                        if position[changing2] < 0:
-                            position[changing2] += 2
-                        else:
-                            position[changing1] -= 2
-                    else:
-                        if position[changing2] < 0:
-                            position[changing1] += 2
-                        else:
-                            position[changing2] -= 2
-                            
-                    temp = piece.colours[indices[0]]
-                    piece.colours[indices[0]] = colours[indices[1]]
-                    piece.colours[indices[1]] = temp
-                    
-                else:
-                    if position[changing1] <= 0 and position[changing2] <= 0:
-                        piece.position[changing2] += 1
-                        piece.position[changing1] += 1                                        
-                    else:
-                        piece.position[changing2] -= 1
-                        piece.position[changing1] -= 1
-                    
-                    #find index of none
-                    index = 0
-                    found = False
-                    while not found:
-                        if colours[index] == None:
-                            found = True
-                        else:
-                            index += 1
-
-                    #remove index of colour facing in same direction
-                    indices.remove(constant_axis)
-                        
-                    piece.colours[index] = piece.colours[indices[0]]
-                    piece.colours[indices[0]] = None
+        elif piece.type == "corner":
+            pass
 
                 
         

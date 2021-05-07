@@ -96,9 +96,9 @@ class Cube():
             #for piece in pieces_to_move:
                 #self.rotate_piece(piece,"x",1)
             
-            test_piece = Piece([-1,1,0],["B","Y",None])
+            test_piece = Piece([1,1,0],["G","Y",None])
             print(test_piece)
-            self.rotate_piece(test_piece,"z")
+            self.rotate_piece(test_piece,"x")
             print(test_piece)
                 
 
@@ -121,7 +121,13 @@ class Cube():
         matrix[matrix_row,matrix_column] = 1
 
         #rotate by 90 anticlockwise 3x to get 90 clockwise rotation
-        matrix = np.rot90(matrix, 3)
+        if (direction == 1 and pos[constant_axis]>=0)or(direction == -1 and pos[constant_axis]<0):
+            matrix = np.rot90(matrix)
+        elif (direction == -1 and pos[constant_axis]>=0)or(direction == 1 and pos[constant_axis]<0):
+            matrix = np.rot90(matrix,3)
+
+        print(pos[constant_axis])
+        print(matrix)
 
         result = np.where(matrix==1)
 

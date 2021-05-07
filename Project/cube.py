@@ -83,8 +83,8 @@ class Cube():
         #each rotation on an axis affects another axis of the pieces value
         #for example r affects all pieces with x=1, but it changes their y and z values
         self.axis_affects = {"x":["y","z"],
-                             "y":["x","z"],
-                             "z":["x","y"]
+                             "y":["z","x"],
+                             "z":["y","x"]
                              }
 
     def move(self, move, direction=None):
@@ -103,33 +103,61 @@ class Cube():
                 
 
     def rotate_piece(self, piece, axis, direction=1):
-        position = piece.position
+        pos = piece.position
         constant_axis = self.axes[axis]
         #axis_affects has the right axes and order for cross section
         up_axis = self.axes[self.axis_affects[axis][0]]
         along_axis = self.axes[self.axis_affects[axis][1]]
-        colours = piece.colours
+        clrs = piece.colours
 
         #cross section of axis of rotation
         matrix = np.array([[0,0,0],
                            [0,0,0],
                            [0,0,0]])
 
+        print("before:")
         print(matrix)
 
-        print(position[up_axis])
-        print(position[along_axis])
+        print(pos[up_axis])
+        print(pos[along_axis])
+        print("\n")
         
-        matrix_row = 1 - position[up_axis]
-        matrix_column = position[along_axis] + 1
+        matrix_row = 1 - pos[up_axis]
+        matrix_column = pos[along_axis] + 1
 
+        print("converted to matrix:")
         print(matrix_row)
         print(matrix_column)
 
         matrix[matrix_row,matrix_column] = 1
 
         print(matrix)
+        
+        print("\n")
+        print("after rotation:")
 
+        #rotate by 90 anticlockwise 3x to get 90 clockwise rotation
+        matrix = np.rot90(matrix, 3)
+
+        print(matrix)
+
+        row_count = 0
+        for row in matrix:
+            column_count = 0
+            for column in row:
+                if matrix.item(row, column) == 1:
+                    #matrix_row = row
+                    #matrix_column = column
+                    print("here:")
+                    print(matrix.item(row,column))
+                    
+                column_count += 1
+            row_count+= 1
+            
+        print(matrix_row)
+        print(matrix_column)
+        piece.position[up_axis] = 1 - matrix_row
+        piece.position[along_axis] = matrix_column - 1
         
     
         if piece.type == "center":

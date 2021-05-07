@@ -114,50 +114,21 @@ class Cube():
         matrix = np.array([[0,0,0],
                            [0,0,0],
                            [0,0,0]])
-
-        print("before:")
-        print(matrix)
-
-        print(pos[up_axis])
-        print(pos[along_axis])
-        print("\n")
         
         matrix_row = 1 - pos[up_axis]
         matrix_column = pos[along_axis] + 1
 
-        print("converted to matrix:")
-        print(matrix_row)
-        print(matrix_column)
-
         matrix[matrix_row,matrix_column] = 1
-
-        print(matrix)
-        
-        print("\n")
-        print("after rotation:")
 
         #rotate by 90 anticlockwise 3x to get 90 clockwise rotation
         matrix = np.rot90(matrix, 3)
 
-        print(matrix)
+        result = np.where(matrix==1)
 
-        row_count = 0
-        for row in matrix:
-            column_count = 0
-            for column in row:
-                if matrix.item(row, column) == 1:
-                    #matrix_row = row
-                    #matrix_column = column
-                    print("here:")
-                    print(matrix.item(row,column))
-                    
-                column_count += 1
-            row_count+= 1
-            
-        print(matrix_row)
-        print(matrix_column)
-        piece.position[up_axis] = 1 - matrix_row
-        piece.position[along_axis] = matrix_column - 1
+        new_position = list(zip(result[0],result[1]))
+        
+        piece.position[up_axis] = 1 - new_position[0][0]
+        piece.position[along_axis] = new_position[0][1] - 1
         
     
         if piece.type == "center":

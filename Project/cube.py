@@ -84,7 +84,7 @@ class Cube():
         #for example r affects all pieces with x=1, but it changes their y and z values
         self.axis_affects = {"x":["y","z"],
                              "y":["z","x"],
-                             "z":["y","x"]
+                             "z":["x","y"]
                              }
 
     def move(self, move, direction=None):
@@ -138,7 +138,7 @@ class Cube():
 
         matrix[matrix_row,matrix_column] = 1
 
-        #rotate by 90 anticlockwise 3x to get 90 clockwise rotation
+        #rotate matrix
         if (direction == 1 and pos[constant_axis]>=0)or(direction == -1 and pos[constant_axis]<0):
             matrix = np.rot90(matrix)
         elif (direction == -1 and pos[constant_axis]>=0)or(direction == 1 and pos[constant_axis]<0):

@@ -92,14 +92,14 @@ class Cube():
         else: direction = -1
             
         if move == "R":
-            pieces_to_move = self.get_pieces("x",1)
-            #for piece in pieces_to_move:
-                #self.rotate_piece(piece,"x",1)
+            pieces_to_move = self.get_pieces("x",0)
+            for piece in pieces_to_move:
+                self.rotate_piece(piece,"x",1)
             
-            test_piece = Piece([1,1,0],["G","Y",None])
+            '''test_piece = Piece([1,1,0],["G","Y",None])
             print(test_piece)
             self.rotate_piece(test_piece,"x")
-            print(test_piece)
+            print(test_piece)'''
                 
 
     def rotate_piece(self, piece, axis, direction=1):
@@ -126,9 +126,6 @@ class Cube():
         elif (direction == -1 and pos[constant_axis]>=0)or(direction == 1 and pos[constant_axis]<0):
             matrix = np.rot90(matrix,3)
 
-        print(pos[constant_axis])
-        print(matrix)
-
         result = np.where(matrix==1)
 
         new_position = list(zip(result[0],result[1]))
@@ -137,14 +134,19 @@ class Cube():
         piece.position[along_axis] = new_position[0][1] - 1
         
     
-        if piece.type == "center":
-            pass
+        '''if piece.type == "center":
+            if pos[constant_axis] == 0:
+                #swap the direction the center piece is facing
+                piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]
 
         elif piece.type == "edge":
-            pass
+            piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]
 
         elif piece.type == "corner":
-            pass
+            piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]'''
+
+        if not(piece.type == "center" and pos[constant_axis] != 0):
+            piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]
 
                 
         
@@ -245,4 +247,4 @@ class Cube():
 test_cube = Cube()
 print(test_cube)
 test_cube.move("R")
-
+print(test_cube)

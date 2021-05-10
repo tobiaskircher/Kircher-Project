@@ -243,5 +243,5 @@ class Cube():
 
 test_cube = Cube()
 print(test_cube)
-test_cube.move("B")
+test_cube.move("F")
 print(test_cube)

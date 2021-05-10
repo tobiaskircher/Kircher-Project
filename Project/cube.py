@@ -92,14 +92,32 @@ class Cube():
         else: direction = -1
             
         if move == "R":
-            pieces_to_move = self.get_pieces("x",0)
-            for piece in pieces_to_move:
-                self.rotate_piece(piece,"x",1)
+            pieces_to_move = self.get_pieces("x",1)
+            axis_of_rotation = "x"
+
+        elif move == "L":
+            pieces_to_move = self.get_pieces("x",-1)
+            axis_of_rotation = "x"
+
+        elif move == "F":
+            pieces_to_move = self.get_pieces("z",1)
+            axis_of_rotation = "z"
+
+        elif move == "B":
+            pieces_to_move = self.get_pieces("z",-1)
+            axis_of_rotation = "z"
+
+        elif move == "U":
+            pieces_to_move = self.get_pieces("y",1)
+            axis_of_rotation = "y"
+
+        elif move == "D":
+            pieces_to_move = self.get_pieces("y",-1)
+            axis_of_rotation = "y"
+    
+        for piece in pieces_to_move:
+            self.rotate_piece(piece,axis_of_rotation,direction)
             
-            '''test_piece = Piece([1,1,0],["G","Y",None])
-            print(test_piece)
-            self.rotate_piece(test_piece,"x")
-            print(test_piece)'''
                 
 
     def rotate_piece(self, piece, axis, direction=1):
@@ -132,18 +150,6 @@ class Cube():
         
         piece.position[up_axis] = 1 - new_position[0][0]
         piece.position[along_axis] = new_position[0][1] - 1
-        
-    
-        '''if piece.type == "center":
-            if pos[constant_axis] == 0:
-                #swap the direction the center piece is facing
-                piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]
-
-        elif piece.type == "edge":
-            piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]
-
-        elif piece.type == "corner":
-            piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]'''
 
         if not(piece.type == "center" and pos[constant_axis] != 0):
             piece.colours[up_axis],piece.colours[along_axis] = piece.colours[along_axis], piece.colours[up_axis]
@@ -234,17 +240,8 @@ class Cube():
         
         return text
     
-                
-
-
-
-
-#test_piece = Piece([-1,0,0],["B",None,None])
-
-
-
 
 test_cube = Cube()
 print(test_cube)
-test_cube.move("R")
+test_cube.move("B")
 print(test_cube)

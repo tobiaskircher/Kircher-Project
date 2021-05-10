@@ -243,5 +243,14 @@ class Cube():
 
 test_cube = Cube()
 print(test_cube)
-test_cube.move("F")
-print(test_cube)
+while True:
+    move = input("Input move: ")
+    if move == "end":
+        break
+    else:
+        if len(move) > 1:
+            if move[1] == "'":
+                test_cube.move(move[0],-1)
+        else:
+            test_cube.move(move)
+        print(test_cube)

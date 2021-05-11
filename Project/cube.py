@@ -92,38 +92,20 @@ class Cube():
         else: direction = -1
 
         x_axis_rotations = ["L", "M", "R"]
-            
-        '''if move == "R":
-            pieces_to_move = self.get_pieces("x",1)
-            axis_of_rotation = "x"
-
-        elif move == "L":
-            pieces_to_move = self.get_pieces("x",-1)
-            axis_of_rotation = "x"
-
-        elif move == "M":
-            pieces_to_move = self.get_pieces("x",0)
-            axis_of_rotation = "x"'''
+        y_axis_rotations = ["D", None, "U"]
+        z_axis_rotations = ["B", None, "F"]
 
         if move in x_axis_rotations:
             axis_of_rotation = "x"
             pieces_to_move = self.get_pieces("x",x_axis_rotations.index(move)-1)
 
-        elif move == "F":
-            pieces_to_move = self.get_pieces("z",1)
-            axis_of_rotation = "z"
-
-        elif move == "B":
-            pieces_to_move = self.get_pieces("z",-1)
-            axis_of_rotation = "z"
-
-        elif move == "U":
-            pieces_to_move = self.get_pieces("y",1)
+        elif move in y_axis_rotations:
             axis_of_rotation = "y"
+            pieces_to_move = self.get_pieces("y",y_axis_rotations.index(move)-1)
 
-        elif move == "D":
-            pieces_to_move = self.get_pieces("y",-1)
-            axis_of_rotation = "y"
+        elif move in z_axis_rotations:
+            axis_of_rotation = "z"
+            pieces_to_move = self.get_pieces("z",z_axis_rotations.index(move)-1)
     
         for piece in pieces_to_move:
             self.rotate_piece(piece,axis_of_rotation,direction)

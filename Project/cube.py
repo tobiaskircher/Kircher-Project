@@ -90,14 +90,24 @@ class Cube():
     def move(self, move, direction=None):
         if direction == None: direction = 1
         else: direction = -1
+
+        x_axis_rotations = ["L", "M", "R"]
             
-        if move == "R":
+        '''if move == "R":
             pieces_to_move = self.get_pieces("x",1)
             axis_of_rotation = "x"
 
         elif move == "L":
             pieces_to_move = self.get_pieces("x",-1)
             axis_of_rotation = "x"
+
+        elif move == "M":
+            pieces_to_move = self.get_pieces("x",0)
+            axis_of_rotation = "x"'''
+
+        if move in x_axis_rotations:
+            axis_of_rotation = "x"
+            pieces_to_move = self.get_pieces("x",x_axis_rotations.index(move)-1)
 
         elif move == "F":
             pieces_to_move = self.get_pieces("z",1)
@@ -248,9 +258,12 @@ while True:
     if move == "end":
         break
     else:
-        if len(move) > 1:
-            if move[1] == "'":
-                test_cube.move(move[0],-1)
-        else:
-            test_cube.move(move)
-        print(test_cube)
+        try:
+            if len(move) > 1:
+                if move[1] == "'":
+                    test_cube.move(move[0],-1)
+            else:
+                test_cube.move(move)
+            print(test_cube)
+        except:
+            print("Invalid input.")

@@ -1,0 +1,4 @@
+- fix timer bug (when time is 0.10 it only displays 0.1, which makes it seem like theres been a loss of accuracy)
+- integrate the cube code into the main code under a new section
+- add 2d to solver screen 
+- add free mode with 2d net

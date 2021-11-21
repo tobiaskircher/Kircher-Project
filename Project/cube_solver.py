@@ -71,13 +71,15 @@ class UI():
         UI.text(msg, 20, x+(width//2), y+(height//2))
 
 
-    def rubix_face(x, y, width, gap):
+    def rubix_face(x, y, width, gap, colours):
         grid_rows = [y - gap - 1.5*width ,y - width//2, y + width//2 + gap]
         grid_columns = [x - gap - 1.5*width ,x - width//2, x + width//2 + gap]
 
+        count = 0
         for j in grid_rows:
             for i in grid_columns:
-                UI.button("",i,j,width,width,YELLOW,YELLOW)
+                UI.button("",i,j,width,width,colours_dic[colours[count]],colours_dic[colours[count]])
+                count+=1
 
         
         
@@ -335,14 +337,21 @@ class GameState():
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("VIRTUAL", 50, 320, 30,WHITE)
 
-        UI.rubix_face(255,140,30,10)
+        the_cube = ['y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y',
+                    'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b',
+                    'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
+                    'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g',
+                    'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o',
+                    'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
         
-        UI.rubix_face(125,270,30,10)
-        UI.rubix_face(255,270,30,10)
-        UI.rubix_face(385,270,30,10)
-        UI.rubix_face(515,270,30,10)
+        UI.rubix_face(255,140,30,10,the_cube[0:9])
+        
+        UI.rubix_face(125,270,30,10,the_cube[9:18])
+        UI.rubix_face(255,270,30,10,the_cube[18:27])
+        UI.rubix_face(385,270,30,10,the_cube[27:36])
+        UI.rubix_face(515,270,30,10,the_cube[36:45])
 
-        UI.rubix_face(255,400,30,10)
+        UI.rubix_face(255,400,30,10,the_cube[45:54])
         
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

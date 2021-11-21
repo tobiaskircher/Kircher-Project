@@ -207,7 +207,7 @@ class Cube():
 
         #create net
         text = ""
-        
+
         #yellow face
         for i in range(0,9,3):
             text += (" " * 4) + "".join(cube[i:i+3]) + "\n"

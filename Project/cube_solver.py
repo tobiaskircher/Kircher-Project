@@ -70,6 +70,17 @@ class UI():
 
         UI.text(msg, 20, x+(width//2), y+(height//2))
 
+
+    def rubix_face(x, y, width, gap):
+        grid_rows = [y - gap - 1.5*width ,y - width//2, y + width//2 + gap]
+        grid_columns = [x - gap - 1.5*width ,x - width//2, x + width//2 + gap]
+
+        for i in grid_rows:
+            for j in grid_columns:
+                UI.button("",i,j,width,width,YELLOW,YELLOW)
+
+        
+        
 class ButtonFunctions():
     def solve():
         game_state.state = "solve"
@@ -113,6 +124,9 @@ class ButtonFunctions():
         game_state.space_being_pressed = False
         game_state.just_stopped = False
         ButtonFunctions.generate_scramble()
+
+    def virtual():
+        game_state.state = "virtual"
 
     def learn():
         game_state.state = "learn"
@@ -166,6 +180,8 @@ class GameState():
             
         elif self.state == "timer":
             self.timer_screen()
+        elif self.state == "virtual":
+            self.virtual_screen()
         elif self.state == "learn":
             self.learn_screen()
         elif self.state == "help":
@@ -174,8 +190,9 @@ class GameState():
     def menu_screen(self):
         UI.button("Solve",220,150,200,50,GREY,LIGHT_GREY, ButtonFunctions.solve)
         UI.button("Timer",220,210,200,50,GREY,LIGHT_GREY, ButtonFunctions.timer)
-        UI.button("Learn",220,270,200,50,GREY,LIGHT_GREY, ButtonFunctions.learn)
-        UI.button("Help",220,330,200,50,GREY,LIGHT_GREY, ButtonFunctions.help)
+        UI.button("Virtual Cube",220,270,200,50,GREY,LIGHT_GREY, ButtonFunctions.virtual)
+        UI.button("Learn",220,330,200,50,GREY,LIGHT_GREY, ButtonFunctions.learn)
+        UI.button("Help",220,390,200,50,GREY,LIGHT_GREY, ButtonFunctions.help)
         UI.text("CUBE SOLVER", 50, 320, 80,WHITE)
 
     def return_to_menu(self):
@@ -314,7 +331,12 @@ class GameState():
 
         UI.text(str(self.time_total_rounded), 80, 320, 240,WHITE)
             
+    def virtual_screen(self):
+        UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
+        UI.text("VIRTUAL", 50, 320, 30,WHITE)
 
+        UI.rubix_face(170,320,25,10)
+        
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("LEARN", 50, 320, 30,WHITE)

@@ -75,8 +75,8 @@ class UI():
         grid_rows = [y - gap - 1.5*width ,y - width//2, y + width//2 + gap]
         grid_columns = [x - gap - 1.5*width ,x - width//2, x + width//2 + gap]
 
-        for i in grid_rows:
-            for j in grid_columns:
+        for j in grid_rows:
+            for i in grid_columns:
                 UI.button("",i,j,width,width,YELLOW,YELLOW)
 
         
@@ -335,7 +335,7 @@ class GameState():
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("VIRTUAL", 50, 320, 30,WHITE)
 
-        UI.rubix_face(170,320,25,10)
+        UI.rubix_face(320,170,30,10)
         
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

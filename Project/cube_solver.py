@@ -568,6 +568,14 @@ class GameState():
         UI.rubix_face(515,270,30,10,self.virtual_cube.as_list()[36:45])
 
         UI.rubix_face(255,400,30,10,self.virtual_cube.as_list()[45:54])
+
+        existing_moves = ["L","M","R","D","U","B","F"]
+        
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                letter = pygame.key.name(event.key).upper()
+                if letter in existing_moves:
+                    self.virtual_cube.move(letter)
         
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

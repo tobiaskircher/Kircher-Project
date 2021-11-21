@@ -205,7 +205,7 @@ class Cube():
                 if point[1][index] != None:
                     cube[point[1][index]] = piece.colours[index]
 
-        text = cube
+        text = str(cube)
         
         #create net
         '''text = ""

@@ -1,5 +1,3 @@
 - understand and alter matrix section
 
-- integrate the cube code into the main code under a new section
 - add 2d to solver screen 
-- add free mode with 2d net

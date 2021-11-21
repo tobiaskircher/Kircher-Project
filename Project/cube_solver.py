@@ -342,13 +342,7 @@ class ButtonFunctions():
         ButtonFunctions.generate_scramble()
 
     def virtual():
-        game_state.virtual_cube = ['y', 'y', 'y', 'y', 'y', 'y', 'y', 'y', 'y',
-                    'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b',
-                    'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
-                    'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g', 'g',
-                    'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o',
-                    'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
-
+        game_state.shift_pressed = False
         game_state.virtual_cube = Virtual_Cube()
         
         game_state.state = "virtual"
@@ -569,13 +563,24 @@ class GameState():
 
         UI.rubix_face(255,400,30,10,self.virtual_cube.as_list()[45:54])
 
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LSHIFT]:
+            self.shift_pressed = True
+        else:
+            if self.shift_pressed == True:
+                self.shift_pressed = False
+                
         existing_moves = ["L","M","R","D","U","B","F"]
         
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 letter = pygame.key.name(event.key).upper()
                 if letter in existing_moves:
-                    self.virtual_cube.move(letter)
+                    if self.shift_pressed == True:
+                        self.virtual_cube.move(letter,-1)
+                    else:
+                        self.virtual_cube.move(letter)
+                
         
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

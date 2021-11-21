@@ -300,7 +300,7 @@ class GameState():
             if self.timer_started == True:
                 self.timer_started = False
                 self.just_stopped = True
-                self.time_total_rounded = round(self.time_total, 2)
+                self.time_total_rounded = '{:.2f}'.format(round(self.time_total, 2))
 
         else:
             if self.space_being_pressed == True:

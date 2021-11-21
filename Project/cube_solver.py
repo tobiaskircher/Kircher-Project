@@ -335,7 +335,14 @@ class GameState():
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("VIRTUAL", 50, 320, 30,WHITE)
 
-        UI.rubix_face(320,170,30,10)
+        UI.rubix_face(255,140,30,10)
+        
+        UI.rubix_face(125,270,30,10)
+        UI.rubix_face(255,270,30,10)
+        UI.rubix_face(385,270,30,10)
+        UI.rubix_face(515,270,30,10)
+
+        UI.rubix_face(255,400,30,10)
         
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

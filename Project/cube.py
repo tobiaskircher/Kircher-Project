@@ -205,8 +205,10 @@ class Cube():
                 if point[1][index] != None:
                     cube[point[1][index]] = piece.colours[index]
 
+        text = cube
+        
         #create net
-        text = ""
+        '''text = ""
 
         #yellow face
         for i in range(0,9,3):
@@ -228,7 +230,7 @@ class Cube():
         #white face
         text += "\n"
         for i in range(45,53,3):
-            text += (" " * 4) + "".join(cube[i:i+3]) + "\n"
+            text += (" " * 4) + "".join(cube[i:i+3]) + "\n"'''
         
         return text
     

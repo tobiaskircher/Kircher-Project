@@ -295,6 +295,20 @@ class UI():
                 UI.button("",i,j,width,width,colours_dic[colours[count]],colours_dic[colours[count]])
                 count+=1
 
+    def rubix_net(x,y, width, gap, colours):
+        colour_list = [colours[0:9],colours[9:18],colours[18:27],colours[27:36],colours[36:45],colours[45:54]]
+
+        one_face = 3*width + 2*gap
+        face_gap = 2*gap
+        spacing = one_face + face_gap
+        UI.rubix_face(x,y-spacing,width,gap,colour_list[0])
+        
+        UI.rubix_face(x-spacing,y,width,gap,colour_list[1])
+        UI.rubix_face(x,y,width,gap,colour_list[2])
+        UI.rubix_face(x+spacing,y,width,gap,colour_list[3])
+        UI.rubix_face(x+2*spacing,y,width,gap,colour_list[4])
+
+        UI.rubix_face(x,y+spacing,width,gap,colour_list[5])
         
         
 class ButtonFunctions():
@@ -305,11 +319,11 @@ class ButtonFunctions():
         game_state.solution = ""
 
         ###TESTING SKIP
-        #game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
-        #game_state.state = "solve_solution_screen"
-        #game_state.solution = solution_generator.run(game_state.cube)
-        #game_state.move_counter = 0
-        #game_state.space_being_pressed = True
+        game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        game_state.state = "solve_solution_screen"
+        game_state.solution = solution_generator.run(game_state.cube)
+        game_state.move_counter = 0
+        game_state.space_being_pressed = True
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -553,15 +567,8 @@ class GameState():
     def virtual_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("VIRTUAL", 50, 320, 30,WHITE)
-        
-        UI.rubix_face(255,140,30,10,self.virtual_cube.as_list()[0:9])
-        
-        UI.rubix_face(125,270,30,10,self.virtual_cube.as_list()[9:18])
-        UI.rubix_face(255,270,30,10,self.virtual_cube.as_list()[18:27])
-        UI.rubix_face(385,270,30,10,self.virtual_cube.as_list()[27:36])
-        UI.rubix_face(515,270,30,10,self.virtual_cube.as_list()[36:45])
 
-        UI.rubix_face(255,400,30,10,self.virtual_cube.as_list()[45:54])
+        UI.rubix_net(255,270,30,10,self.virtual_cube.as_list())
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LSHIFT]:

@@ -112,17 +112,7 @@ class Virtual_Cube():
         for piece in pieces_to_move:
             self.rotate_piece(piece,axis_of_rotation,direction)
             
-                
-    def text_move(self, movement):
-        if len(movement) > 1:
-            if movement[1] == "'":
-                self.move(movement[0],-1)
-            elif movement[1] == "2":
-                self.move(movement)
-                self.move(movement)
-        else:
-            self.move(movement)
-        
+            
     def rotate_piece(self, piece, axis, direction=1):
         pos = piece.position
         constant_axis = self.axes[axis]
@@ -346,7 +336,7 @@ class ButtonFunctions():
                 game_state.solving_cube.move(i,-1)
 
         move_string = str(game_state.solution[0])
-        #game_state.solving_cube.text_move(move_string)
+        ButtonFunctions.text_move(move_string)
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -424,6 +414,16 @@ class ButtonFunctions():
 
         game_state.scramble = scramble
 
+    def text_move(movement):
+        if len(movement) > 1:
+            if movement[1] == "'":
+                game_state.solving_cube.move(movement[0],-1)
+            elif movement[1] == "2":
+                game_state.solving_cube.move(movement)
+                game_state.solving_cube.move(movement)
+        else:
+            game_state.solving_cube.move(movement)
+            
 class GameState():
     def __init__(self):
         self.state = "menu"
@@ -523,7 +523,7 @@ class GameState():
                 if self.move_counter + 1 < len(self.solution):
                     self.move_counter += 1
                     move_string = str(self.solution[self.move_counter])
-                    self.solving_cube.text_move(move_string)
+                    ButtonFunctions.text_move(move_string)
         else:
             self.space_being_pressed = False
 

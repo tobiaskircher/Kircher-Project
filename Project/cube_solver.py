@@ -324,6 +324,19 @@ class ButtonFunctions():
         game_state.solution = solution_generator.run(game_state.cube)
         game_state.move_counter = 0
         game_state.space_being_pressed = True
+        game_state.solving_cube = Virtual_Cube()
+        for i in reversed(game_state.solution):
+            i = str(i)
+            if len(i) > 1:
+                if i[1] == "'":
+                    game_state.solving_cube.move(i[0],-1)
+                elif i[1] == "2":
+                    game_state.solving_cube.move(i[0])
+                    game_state.solving_cube.move(i[0])       
+                else:
+                    game_state.solving_cube.move(i)
+
+        print(game_state.solving_cube.as_list())
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -335,6 +348,18 @@ class ButtonFunctions():
             game_state.move_counter = 0
             game_state.solution = solution_generator.run(game_state.cube)
             game_state.space_being_pressed = True
+            game_state.solving_cube = Virtual_Cube()
+            for i in reversed(game_state.solution):
+                i = str(i)
+                if len(i) > 1:
+                    if i[1] == "'":
+                        game_state.solving_cube.move(i[0],-1)
+                    elif i[1] == "2":
+                        game_state.solving_cube.move(i[0])
+                        game_state.solving_cube.move(i[0])       
+                else:
+                    game_state.solving_cube.move(i)
+                
 
     def change_colour(params):
         position = params[0]
@@ -489,7 +514,9 @@ class GameState():
                     self.move_counter += 1
         else:
             self.space_being_pressed = False
-        
+
+        UI.rubix_net(140,270,20,6,self.solving_cube.as_list())
+            
         UI.text("Previous", 15, 380, 195,WHITE)
         UI.text("Moves:", 15, 380, 210,WHITE)
         if self.move_counter > 1:
@@ -500,8 +527,7 @@ class GameState():
             prev_move_text = ""
         UI.text(prev_move_text, 25, 380, 250,WHITE)
         
-        UI.text("Next", 25, 480, 190,WHITE)
-        UI.text("Move:", 25, 480, 215,WHITE)
+        UI.text("Move:", 25, 480, 200,WHITE)
         UI.text(str(self.solution[self.move_counter]), 40, 480, 250,WHITE)
         
         UI.text("Upcoming", 15, 580, 195,WHITE)

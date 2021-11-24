@@ -325,18 +325,20 @@ class ButtonFunctions():
         game_state.move_counter = 0
         game_state.space_being_pressed = True
         game_state.solving_cube = Virtual_Cube()
-        for i in reversed(game_state.solution):
+        print(game_state.solution)
+        print(list(reversed(game_state.solution)))
+        '''for i in reversed(game_state.solution):
             i = str(i)
             if len(i) > 1:
                 if i[1] == "'":
-                    game_state.solving_cube.move(i[0],-1)
+                    game_state.solving_cube.move(i[0])
                 elif i[1] == "2":
                     game_state.solving_cube.move(i[0])
                     game_state.solving_cube.move(i[0])       
                 else:
-                    game_state.solving_cube.move(i)
+                    game_state.solving_cube.move(i,-1)
 
-        print(game_state.solving_cube.as_list())
+        print(game_state.solving_cube.as_list())''' 
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -516,6 +518,7 @@ class GameState():
             self.space_being_pressed = False
 
         UI.rubix_net(140,270,20,6,self.solving_cube.as_list())
+        #UI.rubix_net(140,270,20,6,self.cube)
             
         UI.text("Previous", 15, 380, 195,WHITE)
         UI.text("Moves:", 15, 380, 210,WHITE)

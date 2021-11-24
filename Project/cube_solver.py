@@ -113,7 +113,16 @@ class Virtual_Cube():
             self.rotate_piece(piece,axis_of_rotation,direction)
             
                 
-
+    def text_move(self, movement):
+        if len(movement) > 1:
+            if movement[1] == "'":
+                self.move(movement[0],-1)
+            elif movement[1] == "2":
+                self.move(movement)
+                self.move(movement)
+        else:
+            self.move(movement)
+        
     def rotate_piece(self, piece, axis, direction=1):
         pos = piece.position
         constant_axis = self.axes[axis]
@@ -327,7 +336,6 @@ class ButtonFunctions():
         game_state.solving_cube = Virtual_Cube()
         for i in list(reversed(game_state.solution)):
             i = str(i)
-            print(i)
             if len(i) > 1:
                 if i[1] == "'":
                     game_state.solving_cube.move(i[0])
@@ -337,7 +345,8 @@ class ButtonFunctions():
             else:
                 game_state.solving_cube.move(i,-1)
 
-        print(game_state.solving_cube.as_list())
+        move_string = str(game_state.solution[0])
+        #game_state.solving_cube.text_move(move_string)
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -513,11 +522,12 @@ class GameState():
                 self.space_being_pressed = True
                 if self.move_counter + 1 < len(self.solution):
                     self.move_counter += 1
+                    move_string = str(self.solution[self.move_counter])
+                    self.solving_cube.text_move(move_string)
         else:
             self.space_being_pressed = False
 
         UI.rubix_net(140,270,20,6,self.solving_cube.as_list())
-        #UI.rubix_net(140,270,20,6,self.cube)
             
         UI.text("Previous", 15, 380, 195,WHITE)
         UI.text("Moves:", 15, 380, 210,WHITE)

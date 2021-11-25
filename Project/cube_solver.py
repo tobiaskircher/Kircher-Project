@@ -529,7 +529,7 @@ class GameState():
         else:
             self.space_being_pressed = False
 
-        UI.rubix_net(140,270,20,6,self.solving_cube.as_list())
+        UI.rubix_net(130,270,20,6,self.solving_cube.as_list())
             
         UI.text("Previous", 15, 380, 195,WHITE)
         UI.text("Moves:", 15, 380, 210,WHITE)

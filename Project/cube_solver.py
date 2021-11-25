@@ -111,6 +111,8 @@ class Virtual_Cube():
     
         for piece in pieces_to_move:
             self.rotate_piece(piece,axis_of_rotation,direction)
+            if direction == 2:
+                self.rotate_piece(piece,axis_of_rotation,direction)
             
             
     def rotate_piece(self, piece, axis, direction=1):
@@ -419,8 +421,8 @@ class ButtonFunctions():
             if movement[1] == "'":
                 game_state.solving_cube.move(movement[0],-1)
             elif movement[1] == "2":
-                game_state.solving_cube.move(movement)
-                game_state.solving_cube.move(movement)
+                game_state.solving_cube.move(movement[0])
+                game_state.solving_cube.move(movement[0])
         else:
             game_state.solving_cube.move(movement)
             

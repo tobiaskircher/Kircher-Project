@@ -320,7 +320,7 @@ class ButtonFunctions():
         game_state.solution = ""
 
         ###TESTING SKIP
-        game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        '''game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
         game_state.state = "solve_solution_screen"
         game_state.solution = solution_generator.run(game_state.cube)
         game_state.move_counter = 0
@@ -338,7 +338,7 @@ class ButtonFunctions():
                 game_state.solving_cube.move(i,-1)
 
         move_string = str(game_state.solution[0])
-        ButtonFunctions.text_move(move_string)
+        ButtonFunctions.text_move(move_string)'''
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -346,21 +346,24 @@ class ButtonFunctions():
         if game_state.faces_scanned < 6:
             game_state.state = "solve"
         else:
-            game_state.state ="solve_solution_screen"
-            game_state.move_counter = 0
+            game_state.state = "solve_solution_screen"
             game_state.solution = solution_generator.run(game_state.cube)
+            game_state.move_counter = 0
             game_state.space_being_pressed = True
             game_state.solving_cube = Virtual_Cube()
-            for i in reversed(game_state.solution):
+            for i in list(reversed(game_state.solution)):
                 i = str(i)
                 if len(i) > 1:
                     if i[1] == "'":
-                        game_state.solving_cube.move(i[0],-1)
+                        game_state.solving_cube.move(i[0])
                     elif i[1] == "2":
                         game_state.solving_cube.move(i[0])
                         game_state.solving_cube.move(i[0])       
                 else:
-                    game_state.solving_cube.move(i)
+                    game_state.solving_cube.move(i,-1)
+
+            move_string = str(game_state.solution[0])
+            ButtonFunctions.text_move(move_string)
                 
 
     def change_colour(params):

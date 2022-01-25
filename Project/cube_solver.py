@@ -375,7 +375,7 @@ class ButtonFunctions():
     def equip_colour(params):
         colour = params[0]
         game_state.equipped_colour = colour
-
+        
     def timer():
         game_state.state = "timer"
         game_state.timer_started = False
@@ -390,6 +390,23 @@ class ButtonFunctions():
         game_state.virtual_cube = Virtual_Cube()
         
         game_state.state = "virtual"
+
+    def reset_virtual_cube():
+        game_state.virtual_cube = Virtual_Cube()
+
+    def scramble_virtual_cube():
+        moves = ButtonFunctions.generate_scramble()
+        for move in moves:
+            if len(move) > 1:
+                if i[1] == "'":
+                    game_state.virtual_cube.move(i[0])
+                elif i[1] == "2":
+                    game_state.virtual_cube.move(i[0])
+                    game_state.virtual_cube.move(i[0])       
+            else:
+                game_state.virtual_cube.move(i,-1)
+            
+        
 
     def learn():
         game_state.state = "learn"
@@ -618,6 +635,8 @@ class GameState():
     def virtual_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("VIRTUAL", 50, 320, 30,WHITE)
+        UI.button("Scramble",420,430,100,40,GREY,LIGHT_GREY, ButtonFunctions.scramble_virtual_cube)
+        UI.button("Solve",540,430,80,40,GREY,LIGHT_GREY, ButtonFunctions.reset_virtual_cube)
 
         UI.rubix_net(255,270,30,10,self.virtual_cube.as_list())
 

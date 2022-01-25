@@ -395,9 +395,9 @@ class ButtonFunctions():
         game_state.virtual_cube = Virtual_Cube()
 
     def scramble_virtual_cube():
-        moves = ButtonFunctions.generate_scramble()
-        for move in moves:
-            if len(move) > 1:
+        ButtonFunctions.generate_scramble()
+        for i in game_state.scramble:
+            if len(i) > 1:
                 if i[1] == "'":
                     game_state.virtual_cube.move(i[0])
                 elif i[1] == "2":

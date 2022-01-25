@@ -320,9 +320,12 @@ class ButtonFunctions():
         game_state.solution = ""
 
         ###TESTING SKIP
-        '''game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
         game_state.state = "solve_solution_screen"
         game_state.solution = solution_generator.run(game_state.cube)
+        print(game_state.solution)
+        game_state.solution.insert(0," ")
+        print(game_state.solution)
         game_state.move_counter = 0
         game_state.space_being_pressed = True
         game_state.solving_cube = Virtual_Cube()
@@ -337,8 +340,8 @@ class ButtonFunctions():
             else:
                 game_state.solving_cube.move(i,-1)
 
-        move_string = str(game_state.solution[0])
-        ButtonFunctions.text_move(move_string)'''
+        #move_string = str(game_state.solution[0])
+        #ButtonFunctions.text_move(move_string)
         ###TESTING SKIP END
 
     def confirm_adjustments():

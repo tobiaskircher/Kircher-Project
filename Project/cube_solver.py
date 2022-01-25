@@ -396,15 +396,17 @@ class ButtonFunctions():
 
     def scramble_virtual_cube():
         ButtonFunctions.generate_scramble()
-        for i in game_state.scramble:
+        print(game_state.scramble.split())
+        for i in game_state.scramble.split():
             if len(i) > 1:
                 if i[1] == "'":
-                    game_state.virtual_cube.move(i[0])
+                    game_state.virtual_cube.move(i[0],-1)
                 elif i[1] == "2":
                     game_state.virtual_cube.move(i[0])
                     game_state.virtual_cube.move(i[0])       
             else:
-                game_state.virtual_cube.move(i,-1)
+                game_state.virtual_cube.move(i)
+            print("worked")
             
         
 

@@ -275,7 +275,8 @@ class UI():
         click = pygame.mouse.get_pressed()
         if x+width > mouse[0] > x and  y+height > mouse[1] > y:
             pygame.draw.rect(screen, active, (x,y,width,height))
-            if click[0] == 1 and func != None:
+            if click[0] == 1 and func != None and game_state.can_click == True:
+                game_state.can_click = False
                 if list(params) != []:
                     func(params)
                 else:
@@ -446,8 +447,7 @@ class ButtonFunctions():
             game_state.solving_cube.move(movement)
 
     def open_link(link):
-        webbrowser.open(link[0])
-        
+        webbrowser.open(link[0])        
             
 class GameState():
     def __init__(self):
@@ -460,7 +460,13 @@ class GameState():
 
         self.equipped_colour = "w"
 
+        self.can_click = True
+
     def state_manager(self):
+        click = pygame.mouse.get_pressed()
+        if click[0] == 0:
+            self.can_click = True
+            
         if self.state == "menu":
             self.menu_screen()
             

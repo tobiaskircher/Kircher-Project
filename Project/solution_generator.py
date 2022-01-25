@@ -1,11 +1,11 @@
 #finds solution to rubiks cube scramble
 #pip instal rubik_solver
 
-from rubik_solver import utils
+import rubik_solver
 
 def run(cube):
     
-    solution = utils.solve(cube, "Kociemba")
+    solution = rubik_solver.utils.solve(cube, "Kociemba")
     #print(solution)
 
     return solution

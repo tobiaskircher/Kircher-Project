@@ -1,4 +1,4 @@
-import pygame, time, random
+import pygame, time, random, webbrowser
 import numpy as np
 import scan_face, solution_generator
 
@@ -444,6 +444,10 @@ class ButtonFunctions():
                 game_state.solving_cube.move(movement[0])
         else:
             game_state.solving_cube.move(movement)
+
+    def open_link(link):
+        webbrowser.open(link)
+        
             
 class GameState():
     def __init__(self):
@@ -672,6 +676,23 @@ class GameState():
     def learn_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("LEARN", 50, 320, 30,WHITE)
+        #Paragraph 1
+        UI.text("The Rubik's cube was invented in 1974 by a professor of", 20, 320, 60,WHITE)
+        UI.text("architecture called Ernő Rubik. Since then it has become", 20, 320, 80,WHITE)
+        UI.text("a world-renowned puzzle and many sophisticated methods for", 20, 320, 100,WHITE)
+        UI.text("solving it have been created.", 20, 320, 120,WHITE)
+
+        #Paragraph 2
+        UI.text("The easiest method to learn is called the \"Beginner's Method\".", 20, 320, 150,WHITE)
+        UI.text("Then there are more complex methods which focus more on time", 20, 320, 170,WHITE)
+        UI.text("taken to solve the cube, for example CFOP.", 20, 320, 190,WHITE)
+
+        #Links
+        UI.text("Links:", 20, 320, 220,WHITE)
+        UI.button("More about the history",320,240,100,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"")
+        UI.button("Learn the Beginner's Method",320,260,100,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"")
+        UI.button("Learn CFOP",320,280,100,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"")
+        
 
     def help_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

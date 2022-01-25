@@ -396,7 +396,6 @@ class ButtonFunctions():
 
     def scramble_virtual_cube():
         ButtonFunctions.generate_scramble()
-        print(game_state.scramble.split())
         for i in game_state.scramble.split():
             if len(i) > 1:
                 if i[1] == "'":
@@ -405,10 +404,7 @@ class ButtonFunctions():
                     game_state.virtual_cube.move(i[0])
                     game_state.virtual_cube.move(i[0])       
             else:
-                game_state.virtual_cube.move(i)
-            print("worked")
-            
-        
+                game_state.virtual_cube.move(i)      
 
     def learn():
         game_state.state = "learn"
@@ -497,8 +493,14 @@ class GameState():
         UI.text("Please Follow The Instructions On The Other Window.", 23, 320, 240,WHITE)
         pygame.display.flip()
         
-
         self.face = scan_face.run(self.faces_to_scan["facing_camera"][self.faces_scanned],self.faces_to_scan["facing_up"][self.faces_scanned])
+        
+        if self.face == "nocamera":
+            self.no_camera = True
+            self.face = "?????????"
+        else:
+            self.no_camera = False
+            
         self.faces_scanned += 1
 
         self.state = "solve_correction_screen" 
@@ -507,6 +509,9 @@ class GameState():
         UI.text("ADJUSTMENTS", 50, 320, 30,WHITE)
         UI.text("Please Make Any Adjustments Required Here.", 25, 320, 70,WHITE)
         UI.text("Make Sure All Parts Are Filled With The Correct Colour.", 20, 320, 100,WHITE)
+        if self.no_camera == True:
+            UI.text("No Camera Was Detected!", 20, 320, 130,RED)
+            
         grid_width = 40
         grid_center = [160,240]
         grid_gap = 10

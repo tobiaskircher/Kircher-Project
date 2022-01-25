@@ -8,8 +8,9 @@ def run(facing_screen, facing_up):
     capture = cv.VideoCapture(0)
 
     if not capture.isOpened():
-        print("Unable To Open Webcam.")
-        exit()
+        #print("Unable To Open Webcam.")
+        #exit()
+        return "nocamera"
 
     else:
         ret, frame = capture.read()

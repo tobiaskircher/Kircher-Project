@@ -501,8 +501,6 @@ class GameState():
             self.face = "?????????"
         else:
             self.no_camera = False
-            
-        self.faces_scanned += 1
 
         self.state = "solve_correction_screen" 
 
@@ -515,6 +513,8 @@ class GameState():
             faces_text = "Scan with "+self.faces_to_scan["facing_camera"][self.faces_scanned]+ " face facing camera,"+ \
                          " and with "+self.faces_to_scan["facing_up"][self.faces_scanned]+ " face facing up."
             UI.text(faces_text, 15, 320, 160,RED)
+
+        self.faces_scanned += 1
             
         grid_width = 40
         grid_center = [160,240]

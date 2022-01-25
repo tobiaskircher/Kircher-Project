@@ -323,9 +323,7 @@ class ButtonFunctions():
         game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
         game_state.state = "solve_solution_screen"
         game_state.solution = solution_generator.run(game_state.cube)
-        print(game_state.solution)
         game_state.solution.insert(0," ")
-        print(game_state.solution)
         game_state.move_counter = 0
         game_state.space_being_pressed = True
         game_state.solving_cube = Virtual_Cube()
@@ -340,9 +338,6 @@ class ButtonFunctions():
             elif i != " ":
                 game_state.solving_cube.move(i,-1)
 
-        #don't make empty move
-        #move_string = str(game_state.solution[0])
-        #ButtonFunctions.text_move(move_string)
         ###TESTING SKIP END
 
     def confirm_adjustments():
@@ -352,6 +347,7 @@ class ButtonFunctions():
         else:
             game_state.state = "solve_solution_screen"
             game_state.solution = solution_generator.run(game_state.cube)
+            game_state.solution.insert(0," ")
             game_state.move_counter = 0
             game_state.space_being_pressed = True
             game_state.solving_cube = Virtual_Cube()
@@ -363,11 +359,8 @@ class ButtonFunctions():
                     elif i[1] == "2":
                         game_state.solving_cube.move(i[0])
                         game_state.solving_cube.move(i[0])       
-                else:
+                elif i != " ":
                     game_state.solving_cube.move(i,-1)
-
-            move_string = str(game_state.solution[0])
-            ButtonFunctions.text_move(move_string)
                 
 
     def change_colour(params):

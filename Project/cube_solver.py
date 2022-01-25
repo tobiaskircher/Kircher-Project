@@ -337,9 +337,10 @@ class ButtonFunctions():
                 elif i[1] == "2":
                     game_state.solving_cube.move(i[0])
                     game_state.solving_cube.move(i[0])       
-            else:
+            elif i != " ":
                 game_state.solving_cube.move(i,-1)
 
+        #don't make empty move
         #move_string = str(game_state.solution[0])
         #ButtonFunctions.text_move(move_string)
         ###TESTING SKIP END

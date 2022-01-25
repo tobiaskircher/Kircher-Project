@@ -320,7 +320,7 @@ class ButtonFunctions():
         game_state.solution = ""
 
         ###TESTING SKIP
-        game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        '''game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
         game_state.state = "solve_solution_screen"
         game_state.solution = solution_generator.run(game_state.cube)
         game_state.solution.insert(0," ")
@@ -336,7 +336,7 @@ class ButtonFunctions():
                     game_state.solving_cube.move(i[0])
                     game_state.solving_cube.move(i[0])       
             elif i != " ":
-                game_state.solving_cube.move(i,-1)
+                game_state.solving_cube.move(i,-1)'''
 
         ###TESTING SKIP END
 
@@ -346,21 +346,24 @@ class ButtonFunctions():
             game_state.state = "solve"
         else:
             game_state.state = "solve_solution_screen"
-            game_state.solution = solution_generator.run(game_state.cube)
-            game_state.solution.insert(0," ")
-            game_state.move_counter = 0
-            game_state.space_being_pressed = True
-            game_state.solving_cube = Virtual_Cube()
-            for i in list(reversed(game_state.solution)):
-                i = str(i)
-                if len(i) > 1:
-                    if i[1] == "'":
-                        game_state.solving_cube.move(i[0])
-                    elif i[1] == "2":
-                        game_state.solving_cube.move(i[0])
-                        game_state.solving_cube.move(i[0])       
-                elif i != " ":
-                    game_state.solving_cube.move(i,-1)
+            try:
+                game_state.solution = solution_generator.run(game_state.cube)
+                game_state.solution.insert(0," ")
+                game_state.move_counter = 0
+                game_state.space_being_pressed = True
+                game_state.solving_cube = Virtual_Cube()
+                for i in list(reversed(game_state.solution)):
+                    i = str(i)
+                    if len(i) > 1:
+                        if i[1] == "'":
+                            game_state.solving_cube.move(i[0])
+                        elif i[1] == "2":
+                            game_state.solving_cube.move(i[0])
+                            game_state.solving_cube.move(i[0])       
+                    elif i != " ":
+                        game_state.solving_cube.move(i,-1)
+            except:
+                game_state.state = "unsolvable_screen"
                 
 
     def change_colour(params):
@@ -447,6 +450,8 @@ class GameState():
             self.solve_correction_screen()
         elif self.state == "solve_solution_screen":
             self.solve_solution_screen()
+        elif self.state == "unsolvable_screen":
+            self.unsolvable_screen()
             
         elif self.state == "timer":
             self.timer_screen()
@@ -563,7 +568,13 @@ class GameState():
             
         #print(self.cube)
         #print(self.solution)
-        
+
+    def unsolvable_screen(self):
+        UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
+        UI.text("SOLVER", 50, 320, 30,WHITE)
+        UI.text("The Rubik's cube you inputted is unsolvable.", 23, 320, 240,RED)
+        UI.text("This may be to misinput or a twisted corner/edge.", 23, 320, 260,RED)
+        UI.text("Please go to back to the menu and try again.", 23, 320, 280,RED)
         
     def timer_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)

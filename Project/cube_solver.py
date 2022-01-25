@@ -688,10 +688,10 @@ class GameState():
         UI.text("taken to solve the cube, for example CFOP.", 20, 320, 190,WHITE)
 
         #Links
-        UI.text("Links:", 20, 320, 220,WHITE)
-        UI.button("More about the history",320,240,100,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"")
-        UI.button("Learn the Beginner's Method",320,260,100,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"")
-        UI.button("Learn CFOP",320,280,100,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"")
+        UI.text("Links:", 20, 320, 250,WHITE)
+        UI.button("More about the history",170,280,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://www.rubiks.com/en-uk/about")
+        UI.button("Learn the Beginner's Method",170,320,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/")
+        UI.button("Learn CFOP",170,360,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://jperm.net/3x3/cfop")
         
 
     def help_screen(self):

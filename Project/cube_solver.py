@@ -493,7 +493,8 @@ class GameState():
         UI.text("Please Follow The Instructions On The Other Window.", 23, 320, 240,WHITE)
         pygame.display.flip()
         
-        self.face = scan_face.run(self.faces_to_scan["facing_camera"][self.faces_scanned],self.faces_to_scan["facing_up"][self.faces_scanned])
+        #self.face = scan_face.run(self.faces_to_scan["facing_camera"][self.faces_scanned],self.faces_to_scan["facing_up"][self.faces_scanned])
+        self.face = "nocamera"
         
         if self.face == "nocamera":
             self.no_camera = True
@@ -511,6 +512,9 @@ class GameState():
         UI.text("Make Sure All Parts Are Filled With The Correct Colour.", 20, 320, 100,WHITE)
         if self.no_camera == True:
             UI.text("No Camera Was Detected!", 20, 320, 130,RED)
+            faces_text = "Scan with "+self.faces_to_scan["facing_camera"][self.faces_scanned]+ " face facing camera,"+ \
+                         " and with "+self.faces_to_scan["facing_up"][self.faces_scanned]+ " face facing up."
+            UI.text(faces_text, 15, 320, 160,RED)
             
         grid_width = 40
         grid_center = [160,240]

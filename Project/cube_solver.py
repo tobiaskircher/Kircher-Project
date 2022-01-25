@@ -446,7 +446,7 @@ class ButtonFunctions():
             game_state.solving_cube.move(movement)
 
     def open_link(link):
-        webbrowser.open(link)
+        webbrowser.open(link[0])
         
             
 class GameState():

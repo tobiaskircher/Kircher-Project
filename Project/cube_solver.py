@@ -462,6 +462,8 @@ class GameState():
 
         self.can_click = True
 
+        self.help_screen = pygame.transform.scale(pygame.image.load("help_screen.jpg").convert(), (640,430))
+
     def state_manager(self):
         click = pygame.mouse.get_pressed()
         if click[0] == 0:
@@ -703,6 +705,7 @@ class GameState():
     def help_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("HELP", 50, 320, 30,WHITE)
+        screen.blit(self.help_screen,(0,30))
         
         
 

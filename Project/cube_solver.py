@@ -462,7 +462,7 @@ class GameState():
 
         self.can_click = True
 
-        self.help_screen = pygame.transform.scale(pygame.image.load("help_screen.jpg").convert(), (640,430))
+        self.help_screen_img = pygame.transform.scale(pygame.image.load("help_screen.jpg").convert(), (640,430))
 
     def state_manager(self):
         click = pygame.mouse.get_pressed()
@@ -695,17 +695,23 @@ class GameState():
         UI.text("Then there are more complex methods which focus more on time", 20, 320, 170,WHITE)
         UI.text("taken to solve the cube, for example CFOP.", 20, 320, 190,WHITE)
 
+        #Paragraph 3
+        UI.text("Moves are mainly written using Rubik's cube notation, which is", 20, 320, 220,WHITE)
+        UI.text("also used in the software. Learn more about it by following the", 20, 320, 240,WHITE)
+        UI.text("relevant link below.", 20, 320, 260,WHITE)
+
         #Links
-        UI.text("Links:", 20, 320, 250,WHITE)
-        UI.button("More about the history",170,280,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://www.rubiks.com/en-uk/about")
-        UI.button("Learn the Beginner's Method",170,320,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/")
-        UI.button("Learn CFOP",170,360,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://jperm.net/3x3/cfop")
+        UI.text("Links:", 20, 320, 300,WHITE)
+        UI.button("More about the history",170,310,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://www.rubiks.com/en-uk/about")
+        UI.button("Learn Rubik's cube notation",170,350,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://ruwix.com/the-rubiks-cube/notation/")
+        UI.button("Learn the Beginner's Method",170,390,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://ruwix.com/the-rubiks-cube/how-to-solve-the-rubiks-cube-beginners-method/")
+        UI.button("Learn CFOP",170,430,300,30,GREY,LIGHT_GREY, ButtonFunctions.open_link,"https://jperm.net/3x3/cfop")
         
 
     def help_screen(self):
         UI.button("Back To Menu",10,10,150,30,GREY,LIGHT_GREY, self.return_to_menu)
         UI.text("HELP", 50, 320, 30,WHITE)
-        screen.blit(self.help_screen,(0,30))
+        screen.blit(self.help_screen_img,(0,50))
         
         
 

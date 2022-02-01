@@ -321,7 +321,7 @@ class ButtonFunctions():
         game_state.solution = ""
 
         ###TESTING SKIP
-        '''game_state.cube = "gybbyyrryrrwbbybrwgggrrwggoobrggoyooygyyoobbwoobwwwrww"
+        '''game_state.cube = "wogwywyrgrgbgbobroryogrryybybwwgbrryowgooygyobowgwbwbr"
         game_state.state = "solve_solution_screen"
         game_state.solution = solution_generator.run(game_state.cube)
         game_state.solution.insert(0," ")
@@ -679,6 +679,8 @@ class GameState():
                         self.virtual_cube.move(letter,-1)
                     else:
                         self.virtual_cube.move(letter)
+            if event.type == pygame.QUIT:
+                done = True
                 
         
     def learn_screen(self):

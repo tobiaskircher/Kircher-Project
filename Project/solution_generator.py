@@ -1,15 +1,9 @@
-#finds solution to rubiks cube scramble
-#pip install rubik_solver
+#SOLUTION GENERATOR
 
+#import required library
 from rubik_solver import utils
 
+#return solution to rubik's cube using Kociemba
 def run(cube):
-    
     solution = utils.solve(cube, "Kociemba")
-    #print(solution)
-
     return solution
-
-#cube = 'yyyyyyyyyrrrbbbbbbgggrrrrrroooggggggbbboooooowwwwwwwww'
-#run(cube)
-#y up, b left, r front, g right, o back, w down
